@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssal Recon: Tactical Command</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+        
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Space Mono', monospace;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        #game-grid {
+            display: grid;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1 / 1;
+            transition: all 0.15s ease;
+            font-size: 0.75rem;
+            position: relative;
+        }
+
+        .cell-hidden {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .cell-hidden:hover {
+            background: #334155;
+            cursor: crosshair;
+        }
+
+        .cell-revealed-water {
+            background: #0c4a6e;
+            color: #7dd3fc;
+        }
+
+        .cell-revealed-ship {
+            background: #991b1b;
+            animation: hit-shake 0.3s ease-in-out;
+            z-index: 10;
+        }
+
+        .cell-sunk-ship {
+            background: #450a0a !important;
+            color: #ef4444 !important;
+            filter: grayscale(0.2);
+        }
+
+        @keyframes hit-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        .cell-sonar {
+            background: #065f46 !important;
+            box-shadow: inset 0 0 10px #10b981;
+            z-index: 20;
+        }
+
+        .cell-torpedo-path {
+            background: #f59e0b !important;
+            box-shadow: 0 0 10px #f59e0b;
+            z-index: 20;
+        }
+
+        .fog-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(148, 163, 184, 0.3);
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            z-index: 5;
+            animation: fog-pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes fog-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        .radar-sweep {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(16, 185, 129, 0.1);
+            top: 0;
+            animation: sweep 6s linear infinite;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        @keyframes sweep {
+            from { top: 0; }
+            to { top: 100%; }
+        }
+
+        .weapon-active {
+            border-color: white !important;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .ship-indicator {
+            display: flex;
+            gap: 2px;
+            padding: 4px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+        
+        .ship-segment {
+            width: 8px;
+            height: 12px;
+            background: #475569;
+            border-radius: 1px;
+        }
+
+        .ship-sunk .ship-segment {
+            background: #ef4444;
+            opacity: 0.3;
+        }
+        
+        .ship-sunk {
+            position: relative;
+            border-color: #ef444433 !important;
+        }
+
+        .ship-sunk::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: #ef4444;
+            transform: rotate(-5deg);
+        }
+
+        .weather-card {
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+            border-left: 4px solid #3b82f6;
+        }
+
+        .btn-abort {
+            transition: all 0.2s;
+            background: #450a0a;
+            border: 1px solid #991b1b;
+        }
+        .btn-abort:hover {
+            background: #991b1b;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+
+    <!-- Header & Stats -->
+    <div class="max-w-3xl w-full mb-4">
+        <div class="flex justify-between items-end border-b border-slate-700 pb-2">
+            <div>
+                <h1 class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter">Abyssal Recon v3.6</h1>
+                <p class="text-[10px] text-slate-400 font-bold tracking-widest">30 AMMO // CONSOLIDATED HUD</p>
+            </div>
+            <div class="text-right">
+                <div class="text-xl font-bold flex items-center justify-end gap-2">
+                    <span id="shots-count">30</span> 
+                    <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
+                </div>
+                <div class="text-[10px] uppercase text-slate-500 tracking-widest">Ammunition</div>
+            </div>
+        </div>
+
+        <!-- Fleet Dashboard -->
+        <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800">
+            <!-- Generated icons -->
+        </div>
+
+        <div class="grid grid-cols-5 gap-2 mt-3">
+            <!-- Wider Weather Panel (2/5 width) -->
+            <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2">
+                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Weather Systems</div>
+                <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase">Clear Skies</div>
+                <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight">Forecast: Loading...</div>
+            </div>
+            
+            <button id="sonar-btn" class="bg-emerald-900/50 hover:bg-emerald-800 p-2 rounded border border-emerald-700 transition-all disabled:opacity-30 col-span-1">
+                <div class="text-[10px] text-emerald-300 uppercase">Sonar</div>
+                <div id="sonar-count" class="text-lg font-bold text-emerald-400">3</div>
+            </button>
+
+            <button id="torpedo-btn" class="bg-amber-900/50 hover:bg-amber-800 p-2 rounded border border-amber-700 transition-all col-span-1">
+                <div class="text-[10px] text-amber-300 uppercase">Torpedo</div>
+                <div id="torpedo-count" class="text-lg font-bold text-amber-400">2</div>
+            </button>
+
+            <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1">
+                <div>
+                    <div class="text-[10px] text-slate-400 uppercase">Hull</div>
+                    <div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter">0/0</div>
+                </div>
+                <div>
+                    <div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase">Ready</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Board -->
+    <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden">
+        <div class="radar-sweep"></div>
+        <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900" style="width: min(95vw, 600px);">
+            <!-- Generated Grid -->
+        </div>
+
+        <!-- Torpedo Direction Selector -->
+        <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
+            <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center">
+                <p class="text-amber-500 font-bold mb-4 uppercase text-sm">Target Vector</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <div></div>
+                    <button onclick="fireTorpedoActual('up')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▲</button>
+                    <div></div>
+                    <button onclick="fireTorpedoActual('left')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">◀</button>
+                    <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs">X</button>
+                    <button onclick="fireTorpedoActual('right')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▶</button>
+                    <div></div>
+                    <button onclick="fireTorpedoActual('down')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▼</button>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Restart Confirmation Modal -->
+        <div id="restart-modal" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
+            <div class="bg-slate-900 p-6 rounded border border-red-500/50 shadow-2xl text-center max-w-xs">
+                <p class="text-red-400 font-bold mb-4 uppercase text-sm tracking-widest">Confirm Termination?</p>
+                <p class="text-xs text-slate-400 mb-6">Current tactical progress will be lost. All ships will be redeployed.</p>
+                <div class="flex gap-4 justify-center">
+                    <button onclick="initGame()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded font-bold text-xs uppercase tracking-tighter">Restart</button>
+                    <button onclick="closeRestartModal()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded font-bold text-xs uppercase tracking-tighter">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Command Row -->
+    <div class="mt-4 flex flex-col items-center gap-4">
+        <button onclick="confirmRestart()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30">
+            Abort Mission
+        </button>
+
+        <div class="max-w-xl p-4 bg-slate-800/50 rounded border border-slate-700/50 text-[11px] text-slate-500 leading-tight text-center">
+            <span class="text-emerald-400 font-bold uppercase tracking-wider">Passive Intel:</span>
+            Carrier (5): +1 Torp // Corvette (2): +5 Ammo // Radar (3): Strike Intel
+        </div>
+    </div>
+
+    <div id="overlay" class="hidden fixed inset-0 bg-slate-900/95 flex flex-col items-center justify-center z-[100] p-6 text-center">
+        <h2 id="overlay-title" class="text-6xl font-black mb-4 tracking-tighter">DEFEAT</h2>
+        <p id="overlay-msg" class="text-xl text-slate-400 mb-8 max-w-md"></p>
+        <button onclick="initGame()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-12 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-900/20 uppercase tracking-widest">
+            Redeploy Fleet
+        </button>
+    </div>
+
+    <script>
+        const GRID_SIZE = 15;
+        const SHIP_TYPES = [5, 4, 4, 3, 3, 2, 2];
+        const WEATHER_TYPES = ['Clear Skies', 'Dense Fog', 'Electrical Storm'];
+        
+        let grid = [];
+        let shots = 30;
+        let hits = 0;
+        let sonarCharges = 3;
+        let torpedoCharges = 2;
+        let totalShipSegments = SHIP_TYPES.reduce((a, b) => a + b, 0);
+        let shipData = [];
+        let gameActive = true;
+        let currentMode = 'shoot';
+        let pendingTorpedoOrigin = null;
+        
+        let currentWeather = 'Clear Skies';
+        let nextWeather = 'Dense Fog';
+        let weatherCounter = 10;
+        let isGlobalFog = false;
+
+        const gridElement = document.getElementById('game-grid');
+        const shotsElement = document.getElementById('shots-count');
+        const fleetElement = document.getElementById('fleet-count');
+        const fleetDashboard = document.getElementById('fleet-dashboard');
+        const sonarBtn = document.getElementById('sonar-btn');
+        const torpedoBtn = document.getElementById('torpedo-btn');
+        const dirSelector = document.getElementById('dir-selector');
+        const weatherText = document.getElementById('weather-text');
+        const nextWeatherText = document.getElementById('next-weather');
+        const statusText = document.getElementById('status-text');
+        const restartModal = document.getElementById('restart-modal');
+
+        function initGame() {
+            grid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill().map(() => ({
+                isShip: false,
+                revealed: false,
+                neighborShips: 0,
+                shipId: null
+            })));
+
+            shipData = SHIP_TYPES.map((size, index) => ({
+                id: index,
+                size: size,
+                health: size,
+                isSunk: false,
+                coords: []
+            }));
+
+            shots = 30;
+            hits = 0;
+            sonarCharges = 3;
+            torpedoCharges = 2;
+            weatherCounter = 10;
+            currentWeather = 'Clear Skies';
+            nextWeather = WEATHER_TYPES[Math.floor(Math.random() * WEATHER_TYPES.length)];
+            isGlobalFog = false;
+            gameActive = true;
+            currentMode = 'shoot';
+            
+            document.getElementById('overlay').classList.add('hidden');
+            dirSelector.classList.add('hidden');
+            restartModal.classList.add('hidden');
+            
+            placeShips();
+            calculateNeighbors();
+            renderGrid();
+            updateUI();
+        }
+
+        function confirmRestart() {
+            if (!gameActive) {
+                initGame();
+                return;
+            }
+            restartModal.classList.remove('hidden');
+        }
+
+        function closeRestartModal() {
+            restartModal.classList.add('hidden');
+        }
+
+        function placeShips() {
+            shipData.forEach((ship) => {
+                let placed = false;
+                let attempts = 0;
+                while (!placed && attempts < 1000) {
+                    const isHorizontal = Math.random() < 0.5;
+                    const r = Math.floor(Math.random() * (GRID_SIZE - (isHorizontal ? 0 : ship.size)));
+                    const c = Math.floor(Math.random() * (GRID_SIZE - (isHorizontal ? ship.size : 0)));
+
+                    if (canPlace(r, c, ship.size, isHorizontal)) {
+                        for (let i = 0; i < ship.size; i++) {
+                            const row = isHorizontal ? r : r + i;
+                            const col = isHorizontal ? c + i : c;
+                            grid[row][col].isShip = true;
+                            grid[row][col].shipId = ship.id;
+                            ship.coords.push({r: row, c: col});
+                        }
+                        placed = true;
+                    }
+                    attempts++;
+                }
+            });
+        }
+
+        function canPlace(r, c, len, horizontal) {
+            for (let i = 0; i < len; i++) {
+                const currR = horizontal ? r : r + i;
+                const currC = horizontal ? c + i : c;
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        const checkR = currR + dr;
+                        const checkC = currC + dc;
+                        if (checkR >= 0 && checkR < GRID_SIZE && checkC >= 0 && checkC < GRID_SIZE) {
+                            if (grid[checkR][checkC].isShip) return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        function calculateNeighbors() {
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    if (grid[r][c].isShip) continue;
+                    let count = 0;
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            const nr = r + dr, nc = c + dc;
+                            if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
+                                if (grid[nr][nc].isShip) count++;
+                            }
+                        }
+                    }
+                    grid[r][c].neighborShips = count;
+                }
+            }
+        }
+
+        function renderGrid() {
+            gridElement.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
+            gridElement.innerHTML = '';
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell border border-slate-800/40 flex items-center justify-center font-bold cell-hidden';
+                    cell.id = `cell-${r}-${c}`;
+                    cell.onclick = () => handleCellClick(r, c);
+                    gridElement.appendChild(cell);
+                }
+            }
+        }
+
+        function handleCellClick(r, c) {
+            if (!gameActive) return;
+            const data = grid[r][c];
+
+            if (currentMode === 'sonar') {
+                if (data.revealed || currentWeather === 'Electrical Storm') return;
+                performSonar(r, c);
+            } else if (currentMode === 'torpedo') {
+                pendingTorpedoOrigin = {r, c};
+                dirSelector.classList.remove('hidden');
+            } else {
+                if (data.revealed) return;
+                revealCell(r, c);
+                shots--;
+                weatherCounter--;
+                if (weatherCounter <= 0) changeWeather();
+                checkGameOver();
+                updateUI();
+            }
+        }
+
+        function changeWeather() {
+            currentWeather = nextWeather;
+            nextWeather = WEATHER_TYPES[Math.floor(Math.random() * WEATHER_TYPES.length)];
+            weatherCounter = 10;
+            isGlobalFog = (currentWeather === 'Dense Fog');
+            renderWeatherEffects();
+        }
+
+        function renderWeatherEffects() {
+            document.querySelectorAll('.fog-overlay').forEach(el => el.remove());
+            if (isGlobalFog) {
+                for(let r=0; r<GRID_SIZE; r++) {
+                    for(let c=0; c<GRID_SIZE; c++) {
+                        const cell = document.getElementById(`cell-${r}-${c}`);
+                        const fog = document.createElement('div');
+                        fog.className = 'fog-overlay';
+                        cell.appendChild(fog);
+                    }
+                }
+            }
+            for(let r=0; r<GRID_SIZE; r++) {
+                for(let c=0; c<GRID_SIZE; c++) {
+                    const data = grid[r][c];
+                    if (data.revealed && !data.isShip) {
+                        const cellEl = document.getElementById(`cell-${r}-${c}`);
+                        if (data.neighborShips > 0) {
+                            cellEl.innerText = isGlobalFog ? '?' : data.neighborShips;
+                            cellEl.style.color = isGlobalFog ? '#94a3b8' : getNumberColor(data.neighborShips);
+                        }
+                    }
+                }
+            }
+        }
+
+        function revealCell(r, c, isFree = false) {
+            const data = grid[r][c];
+            if (data.revealed) return;
+            
+            data.revealed = true;
+            const cellEl = document.getElementById(`cell-${r}-${c}`);
+            cellEl.classList.remove('cell-hidden');
+
+            if (data.isShip) {
+                hits++;
+                cellEl.classList.add('cell-revealed-ship');
+                cellEl.innerHTML = '💥';
+                
+                const ship = shipData[data.shipId];
+                ship.health--;
+                if (ship.size === 3 && !isFree) revealRandomWater(3);
+                if (ship.health <= 0) sinkShip(ship);
+            } else {
+                cellEl.classList.add('cell-revealed-water');
+                if (data.neighborShips > 0) {
+                    cellEl.innerText = isGlobalFog ? '?' : data.neighborShips;
+                    cellEl.style.color = isGlobalFog ? '#94a3b8' : getNumberColor(data.neighborShips);
+                }
+            }
+        }
+
+        function revealRandomWater(count) {
+            let revealed = 0;
+            let attempts = 0;
+            while (revealed < count && attempts < 100) {
+                const r = Math.floor(Math.random() * GRID_SIZE);
+                const c = Math.floor(Math.random() * GRID_SIZE);
+                if (!grid[r][c].isShip && !grid[r][c].revealed) {
+                    revealCell(r, c, true);
+                    revealed++;
+                }
+                attempts++;
+            }
+        }
+
+        function sinkShip(ship) {
+            ship.isSunk = true;
+            if (ship.size === 2) {
+                shots += 5;
+                showStatusText("+5 AMMO SALVAGED", "text-emerald-400");
+            }
+            if (ship.size === 5) {
+                torpedoCharges++;
+                showStatusText("TORPEDO SALVAGED", "text-amber-400");
+            }
+
+            ship.coords.forEach(coord => {
+                const el = document.getElementById(`cell-${coord.r}-${coord.c}`);
+                el.classList.add('cell-sunk-ship');
+                el.innerHTML = '⚓';
+            });
+
+            ship.coords.forEach(coord => {
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        const nr = coord.r + dr, nc = coord.c + dc;
+                        if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
+                            if (!grid[nr][nc].isShip) revealCell(nr, nc, true);
+                        }
+                    }
+                }
+            });
+        }
+
+        function showStatusText(text, colorClass) {
+            if (!statusText) return;
+            const originalText = "READY";
+            const originalColor = "text-emerald-500";
+            statusText.innerText = text;
+            statusText.className = `text-[9px] font-bold uppercase ${colorClass}`;
+            setTimeout(() => {
+                if (gameActive && statusText) {
+                    statusText.innerText = originalText;
+                    statusText.className = `text-[9px] font-bold uppercase ${originalColor}`;
+                }
+            }, 3000);
+        }
+
+        function performSonar(r, c) {
+            if (sonarCharges <= 0 || currentWeather === 'Electrical Storm') return;
+            sonarCharges--;
+            cancelWeapon();
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    const nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
+                        const cellEl = document.getElementById(`cell-${nr}-${nc}`);
+                        const cellData = grid[nr][nc];
+                        cellEl.classList.add('cell-sonar');
+                        setTimeout(() => {
+                            cellEl.classList.remove('cell-sonar');
+                            if (cellData.isShip) {
+                                cellEl.innerHTML = '<span class="text-sm scale-110 drop-shadow-lg" style="color: #fbbf24; opacity: 1;">🚢</span>';
+                            } else if (!cellData.revealed) {
+                                cellEl.innerHTML = '<span class="text-[10px] opacity-20">🌊</span>';
+                            }
+                        }, 1200);
+                    }
+                }
+            }
+            updateUI();
+        }
+
+        function fireTorpedoActual(dir) {
+            if (torpedoCharges <= 0) return;
+            torpedoCharges--;
+            shots -= 2; 
+            dirSelector.classList.add('hidden');
+            const {r, c} = pendingTorpedoOrigin;
+            cancelWeapon();
+            let currR = r, currC = c, hitTarget = false, path = [];
+            while (currR >= 0 && currR < GRID_SIZE && currC >= 0 && currC < GRID_SIZE && !hitTarget) {
+                path.push({r: currR, c: currC});
+                if (grid[currR][currC].isShip) hitTarget = true;
+                if (dir === 'up') currR--;
+                else if (dir === 'down') currR++;
+                else if (dir === 'left') currC--;
+                else if (dir === 'right') currC++;
+            }
+            path.forEach((pos, index) => {
+                setTimeout(() => {
+                    const cellEl = document.getElementById(`cell-${pos.r}-${pos.c}`);
+                    cellEl.classList.add('cell-torpedo-path');
+                    setTimeout(() => {
+                        cellEl.classList.remove('cell-torpedo-path');
+                        revealCell(pos.r, pos.c, true);
+                        if (index === path.length - 1) {
+                            checkGameOver();
+                            updateUI();
+                        }
+                    }, 150);
+                }, index * 80);
+            });
+        }
+
+        function getNumberColor(num) {
+            const colors = ['', '#60a5fa', '#4ade80', '#fbbf24', '#f87171', '#c084fc', '#2dd4bf', '#f472b6', '#ffffff'];
+            return colors[num] || '#fff';
+        }
+
+        function updateUI() {
+            shotsElement.innerText = shots;
+            document.getElementById('sonar-count').innerText = sonarCharges;
+            document.getElementById('torpedo-count').innerText = torpedoCharges;
+            weatherText.innerText = currentWeather;
+            nextWeatherText.innerText = `Forecast: ${nextWeather} in ${weatherCounter}`;
+            sonarBtn.disabled = (currentWeather === 'Electrical Storm' || sonarCharges <= 0);
+            if (fleetElement) fleetElement.innerText = `${totalShipSegments - hits}/${totalShipSegments}`;
+
+            fleetDashboard.innerHTML = '';
+            shipData.forEach(ship => {
+                const shipContainer = document.createElement('div');
+                shipContainer.className = `ship-indicator ${ship.isSunk ? 'ship-sunk' : ''}`;
+                if (ship.size === 5) shipContainer.style.borderColor = '#f59e0b55';
+                if (ship.size === 2) shipContainer.style.borderColor = '#10b98144';
+                if (ship.size === 3) shipContainer.style.borderColor = '#3b82f644';
+                for (let i = 0; i < ship.size; i++) {
+                    const seg = document.createElement('div');
+                    seg.className = 'ship-segment';
+                    if (!ship.isSunk && i < (ship.size - ship.health)) seg.style.background = '#94a3b8';
+                    shipContainer.appendChild(seg);
+                }
+                fleetDashboard.appendChild(shipContainer);
+            });
+            if (shots < 8) shotsElement.parentElement.classList.add('text-red-500', 'animate-pulse');
+            else shotsElement.parentElement.classList.remove('text-red-500', 'animate-pulse');
+        }
+
+        function checkGameOver() {
+            if (hits === totalShipSegments) endGame(true);
+            else if (shots <= 0) endGame(false);
+        }
+
+        function endGame(win) {
+            gameActive = false;
+            const overlay = document.getElementById('overlay');
+            overlay.classList.remove('hidden');
+            const title = document.getElementById('overlay-title');
+            const msg = document.getElementById('overlay-msg');
+            if (win) {
+                title.innerText = "VICTORY";
+                title.className = "text-6xl font-black mb-4 text-emerald-500 tracking-tighter";
+                msg.innerText = `Mission accomplished. Final ammo reserves: ${shots}. Sector neutralized.`;
+            } else {
+                title.innerText = "DEFEAT";
+                title.className = "text-6xl font-black mb-4 text-red-600 tracking-tighter";
+                msg.innerText = "Critical ammo failure. Enemy vessels escaped into the deep.";
+            }
+            for(let r=0; r<GRID_SIZE; r++) {
+                for(let c=0; c<GRID_SIZE; c++) {
+                    const cellEl = document.getElementById(`cell-${r}-${c}`);
+                    const data = grid[r][c];
+                    if (!data.revealed && data.isShip) {
+                        cellEl.classList.remove('cell-hidden');
+                        cellEl.classList.add('bg-slate-700/50');
+                        cellEl.innerHTML = '🚢';
+                    }
+                }
+            }
+        }
+
+        function cancelWeapon() {
+            currentMode = 'shoot';
+            sonarBtn.classList.remove('weapon-active');
+            torpedoBtn.classList.remove('weapon-active');
+            dirSelector.classList.add('hidden');
+            if (statusText) {
+                statusText.innerText = "READY";
+                statusText.className = "text-[9px] font-bold text-emerald-500 uppercase";
+            }
+            updateUI();
+        }
+
+        sonarBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (currentMode === 'sonar') cancelWeapon();
+            else if (sonarCharges > 0 && currentWeather !== 'Electrical Storm') {
+                cancelWeapon();
+                currentMode = 'sonar';
+                sonarBtn.classList.add('weapon-active');
+                if (statusText) statusText.innerText = "SONAR ACTIVE";
+            }
+        };
+
+        torpedoBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (currentMode === 'torpedo') cancelWeapon();
+            else if (torpedoCharges > 0) {
+                cancelWeapon();
+                currentMode = 'torpedo';
+                torpedoBtn.classList.add('weapon-active');
+                if (statusText) statusText.innerText = "TORPEDO ACTIVE";
+            }
+        };
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>
