@@ -166,114 +166,221 @@
             background: #991b1b;
             color: white;
         }
+
+        .sub-card {
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid #334155;
+        }
+        .sub-card:hover {
+            background: #1e293b;
+            border-color: #10b981;
+            transform: translateY(-5px);
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 2px 0;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
 
-    <!-- Header & Stats -->
-    <div class="max-w-3xl w-full mb-4">
-        <div class="flex justify-between items-end border-b border-slate-700 pb-2">
-            <div>
-                <h1 class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter">Abyssal Recon v3.7</h1>
-                <p class="text-[10px] text-slate-400 font-bold tracking-widest">30 AMMO // EXPLOSIVE PAYLOADS</p>
-            </div>
-            <div class="text-right">
-                <div class="text-xl font-bold flex items-center justify-end gap-2">
-                    <span id="shots-count">30</span> 
-                    <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
-                </div>
-                <div class="text-[10px] uppercase text-slate-500 tracking-widest">Ammunition</div>
-            </div>
+    <!-- Deployment Phase (Selection & Briefing) -->
+    <div id="deployment-screen" class="max-w-4xl w-full flex flex-col items-center">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic">Abyssal Recon v3.9</h1>
+            <p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase">Command Deck // Pre-Mission Briefing</p>
         </div>
 
-        <!-- Fleet Dashboard -->
-        <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800">
-            <!-- Generated icons -->
-        </div>
-
-        <div class="grid grid-cols-6 gap-2 mt-3">
-            <!-- Wider Weather Panel (2/6 width) -->
-            <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2">
-                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Weather Systems</div>
-                <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase">Clear Skies</div>
-                <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight">Forecast: Loading...</div>
-            </div>
-            
-            <button id="sonar-btn" class="bg-emerald-900/50 hover:bg-emerald-800 p-2 rounded border border-emerald-700 transition-all disabled:opacity-30 col-span-1">
-                <div class="text-[10px] text-emerald-300 uppercase">Sonar</div>
-                <div id="sonar-count" class="text-lg font-bold text-emerald-400">3</div>
-            </button>
-
-            <button id="torpedo-btn" class="bg-amber-900/50 hover:bg-amber-800 p-2 rounded border border-amber-700 transition-all col-span-1">
-                <div class="text-[10px] text-amber-300 uppercase">Torp</div>
-                <div id="torpedo-count" class="text-lg font-bold text-amber-400">2</div>
-            </button>
-
-            <button id="buster-btn" class="bg-red-900/30 hover:bg-red-900/50 p-2 rounded border border-red-900 transition-all col-span-1 disabled:opacity-20">
-                <div class="text-[10px] text-red-400 uppercase">Buster</div>
-                <div id="buster-count" class="text-lg font-bold text-red-500">0</div>
-            </button>
-
-            <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1">
-                <div>
-                    <div class="text-[10px] text-slate-400 uppercase">Hull</div>
-                    <div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter">0/0</div>
-                </div>
-                <div>
-                    <div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase">Ready</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            <!-- Briefing Panel -->
+            <div class="md:col-span-1 bg-slate-900 border border-slate-700 p-6 rounded-lg self-start">
+                <h2 class="text-emerald-400 font-bold uppercase text-sm mb-4 border-b border-slate-700 pb-2">Intelligence Briefing</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase">Sector Weather</p>
+                        <p id="brief-weather" class="text-sm font-bold text-blue-400 uppercase">Heavy Fog Patterns</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase">Fleet Signatures</p>
+                        <p id="brief-fleet" class="text-sm font-bold text-red-400 uppercase tracking-tighter">7 Confirmed (High Density)</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase">Strategic Objective</p>
+                        <p class="text-[10px] text-slate-400 italic">"Target and neutralize all priority vessels. Intercept the fleet before they breach the sector perimeter—zero escape tolerance."</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Game Board -->
-    <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden">
-        <div class="radar-sweep"></div>
-        <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900" style="width: min(95vw, 600px);">
-            <!-- Generated Grid -->
-        </div>
+            <!-- Submarine Selection -->
+            <div class="md:col-span-2 space-y-4">
+                <h2 class="text-slate-300 font-bold uppercase text-sm mb-2">Select your submarine</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Nautilus -->
+                    <div onclick="selectSub('Nautilus')" class="sub-card p-4 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-emerald-400 font-bold uppercase text-xs">Nautilus</h3>
+                            <span class="text-[8px] bg-emerald-900/50 text-emerald-300 px-1 rounded">INTEL</span>
+                        </div>
+                        <div class="space-y-1 mb-3">
+                            <div class="stat-row"><span class="text-slate-500">Ammo</span><span class="font-bold">35</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Sonar</span><span class="font-bold">5</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Torp</span><span class="font-bold">1</span></div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 leading-tight">Advanced signal processing for superior scouting capability.</p>
+                    </div>
 
-        <!-- Torpedo Direction Selector -->
-        <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
-            <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center">
-                <p id="target-vector-text" class="text-amber-500 font-bold mb-4 uppercase text-sm">Target Vector</p>
-                <div class="grid grid-cols-3 gap-2">
-                    <div></div>
-                    <button onclick="fireTorpedoActual('up')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▲</button>
-                    <div></div>
-                    <button onclick="fireTorpedoActual('left')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">◀</button>
-                    <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs">X</button>
-                    <button onclick="fireTorpedoActual('right')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▶</button>
-                    <div></div>
-                    <button onclick="fireTorpedoActual('down')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▼</button>
-                    <div></div>
-                </div>
-            </div>
-        </div>
+                    <!-- The Kraken -->
+                    <div onclick="selectSub('The Kraken')" class="sub-card p-4 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-amber-400 font-bold uppercase text-xs">The Kraken</h3>
+                            <span class="text-[8px] bg-amber-900/50 text-amber-300 px-1 rounded">OFFENSE</span>
+                        </div>
+                        <div class="space-y-1 mb-3">
+                            <div class="stat-row"><span class="text-slate-500">Ammo</span><span class="font-bold">25</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Sonar</span><span class="font-bold">2</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Torp</span><span class="font-bold">5</span></div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 leading-tight">Heavy ordinance payload designed for massive fleet clearing.</p>
+                    </div>
 
-        <!-- Restart Confirmation Modal -->
-        <div id="restart-modal" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
-            <div class="bg-slate-900 p-6 rounded border border-red-500/50 shadow-2xl text-center max-w-xs">
-                <p class="text-red-400 font-bold mb-4 uppercase text-sm tracking-widest">Confirm Termination?</p>
-                <p class="text-xs text-slate-400 mb-6">Current tactical progress will be lost. All ships will be redeployed.</p>
-                <div class="flex gap-4 justify-center">
-                    <button onclick="initGame()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded font-bold text-xs uppercase tracking-tighter">Restart</button>
-                    <button onclick="closeRestartModal()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded font-bold text-xs uppercase tracking-tighter">Cancel</button>
+                    <!-- Ghost-6 -->
+                    <div onclick="selectSub('Ghost-6')" class="sub-card p-4 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-indigo-400 font-bold uppercase text-xs">Ghost-6</h3>
+                            <span class="text-[8px] bg-indigo-900/50 text-indigo-300 px-1 rounded">STEALTH</span>
+                        </div>
+                        <div class="space-y-1 mb-3">
+                            <div class="stat-row"><span class="text-slate-500">Ammo</span><span class="font-bold">30</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Sonar</span><span class="font-bold">3</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Torp</span><span class="font-bold">2</span></div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 leading-tight">Environmental hardening. Immune to Storm jamming and Fog obscuration.</p>
+                    </div>
+
+                    <!-- The Scavenger -->
+                    <div onclick="selectSub('The Scavenger')" class="sub-card p-4 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-rose-400 font-bold uppercase text-xs">The Scavenger</h3>
+                            <span class="text-[8px] bg-rose-900/50 text-rose-300 px-1 rounded">SALVAGE</span>
+                        </div>
+                        <div class="space-y-1 mb-3">
+                            <div class="stat-row"><span class="text-slate-500">Ammo</span><span class="font-bold">20</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Sonar</span><span class="font-bold">2</span></div>
+                            <div class="stat-row"><span class="text-slate-500">Torp</span><span class="font-bold">2</span></div>
+                        </div>
+                        <p class="text-[9px] text-rose-300 leading-tight">Double salvage rewards (+10 Ammo from Corvettes, +2 Buster Torps from Carriers).</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Command Row -->
-    <div class="mt-4 flex flex-col items-center gap-4">
-        <button onclick="confirmRestart()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30">
-            Abort Mission
-        </button>
+    <!-- Main Tactical Interface -->
+    <div id="game-screen" class="hidden max-w-3xl w-full">
+        <!-- Header & Stats -->
+        <div class="mb-4">
+            <div class="flex justify-between items-end border-b border-slate-700 pb-2">
+                <div>
+                    <h1 id="sub-name-display" class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter">Nautilus</h1>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest">TACTICAL INTERFACE // DEPLOYED</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-xl font-bold flex items-center justify-end gap-2">
+                        <span id="shots-count">30</span> 
+                        <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
+                    </div>
+                    <div class="text-[10px] uppercase text-slate-500 tracking-widest">Ammunition</div>
+                </div>
+            </div>
 
-        <div class="max-w-xl p-4 bg-slate-800/50 rounded border border-slate-700/50 text-[11px] text-slate-500 leading-tight text-center">
-            <span class="text-red-400 font-bold uppercase tracking-wider">New Weapon Tech:</span>
-            <br>
-            <b class="text-amber-400">Torp Exp:</b> Hits trigger 3x3 reveal // <b class="text-red-500">Buster:</b> Instant kill on any ship contact.
+            <!-- Fleet Dashboard -->
+            <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800">
+                <!-- Generated icons -->
+            </div>
+
+            <div class="grid grid-cols-6 gap-2 mt-3">
+                <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2">
+                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Weather Systems</div>
+                    <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase">Clear Skies</div>
+                    <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight">Forecast: Loading...</div>
+                </div>
+                
+                <button id="sonar-btn" class="bg-emerald-900/50 hover:bg-emerald-800 p-2 rounded border border-emerald-700 transition-all disabled:opacity-30 col-span-1">
+                    <div class="text-[10px] text-emerald-300 uppercase">Sonar</div>
+                    <div id="sonar-count" class="text-lg font-bold text-emerald-400">3</div>
+                </button>
+
+                <button id="torpedo-btn" class="bg-amber-900/50 hover:bg-amber-800 p-2 rounded border border-amber-700 transition-all col-span-1">
+                    <div class="text-[10px] text-amber-300 uppercase">Torp</div>
+                    <div id="torpedo-count" class="text-lg font-bold text-amber-400">2</div>
+                </button>
+
+                <button id="buster-btn" class="bg-red-900/30 hover:bg-red-900/50 p-2 rounded border border-red-900 transition-all col-span-1 disabled:opacity-20">
+                    <div class="text-[10px] text-red-400 uppercase">Buster</div>
+                    <div id="buster-count" class="text-lg font-bold text-red-500">0</div>
+                </button>
+
+                <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1">
+                    <div>
+                        <div class="text-[10px] text-slate-400 uppercase">Hull</div>
+                        <div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter">0/0</div>
+                    </div>
+                    <div>
+                        <div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase">Ready</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden">
+            <div class="radar-sweep"></div>
+            <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900" style="width: min(95vw, 600px);">
+                <!-- Generated Grid -->
+            </div>
+
+            <!-- Torpedo Direction Selector -->
+            <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
+                <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center">
+                    <p id="target-vector-text" class="text-amber-500 font-bold mb-4 uppercase text-sm">Target Vector</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div></div>
+                        <button onclick="fireTorpedoActual('up')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▲</button>
+                        <div></div>
+                        <button onclick="fireTorpedoActual('left')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">◀</button>
+                        <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs">X</button>
+                        <button onclick="fireTorpedoActual('right')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▶</button>
+                        <div></div>
+                        <button onclick="fireTorpedoActual('down')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▼</button>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restart Confirmation Modal -->
+            <div id="restart-modal" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
+                <div class="bg-slate-900 p-6 rounded border border-red-500/50 shadow-2xl text-center max-w-xs">
+                    <p class="text-red-400 font-bold mb-4 uppercase text-sm tracking-widest">Confirm Termination?</p>
+                    <p class="text-xs text-slate-400 mb-6">Current tactical progress will be lost. All ships will be redeployed.</p>
+                    <div class="flex gap-4 justify-center">
+                        <button onclick="initGame()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded font-bold text-xs uppercase tracking-tighter">Restart</button>
+                        <button onclick="closeRestartModal()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded font-bold text-xs uppercase tracking-tighter">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Command Row -->
+        <div class="mt-4 flex flex-col items-center gap-4">
+            <button onclick="confirmRestart()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30">
+                Abort Mission
+            </button>
         </div>
     </div>
 
@@ -298,7 +405,7 @@
         let busterCharges = 0;
         let totalShipSegments = SHIP_TYPES.reduce((a, b) => a + b, 0);
         let shipData = [];
-        let gameActive = true;
+        let gameActive = false;
         let currentMode = 'shoot';
         let pendingTorpedoOrigin = null;
         
@@ -306,6 +413,8 @@
         let nextWeather = 'Dense Fog';
         let weatherCounter = 10;
         let isGlobalFog = false;
+
+        let selectedSub = 'Nautilus';
 
         const gridElement = document.getElementById('game-grid');
         const shotsElement = document.getElementById('shots-count');
@@ -320,7 +429,44 @@
         const statusText = document.getElementById('status-text');
         const restartModal = document.getElementById('restart-modal');
 
+        const deploymentScreen = document.getElementById('deployment-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const subDisplay = document.getElementById('sub-name-display');
+
         function initGame() {
+            // Setup Briefing Data
+            const randWeather = WEATHER_TYPES[Math.floor(Math.random() * WEATHER_TYPES.length)];
+            document.getElementById('brief-weather').innerText = `${randWeather} Patterns`;
+            document.getElementById('brief-fleet').innerText = `${SHIP_TYPES.length} Confirmed Signatures`;
+
+            deploymentScreen.classList.remove('hidden');
+            gameScreen.classList.add('hidden');
+            document.getElementById('overlay').classList.add('hidden');
+            restartModal.classList.add('hidden');
+            gameActive = false;
+        }
+
+        function selectSub(name) {
+            selectedSub = name;
+            startMission();
+        }
+
+        function startMission() {
+            deploymentScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            subDisplay.innerText = selectedSub;
+            
+            // Set Submarine Stats
+            if (selectedSub === 'Nautilus') {
+                shots = 35; sonarCharges = 5; torpedoCharges = 1;
+            } else if (selectedSub === 'The Kraken') {
+                shots = 25; sonarCharges = 2; torpedoCharges = 5;
+            } else if (selectedSub === 'Ghost-6') {
+                shots = 30; sonarCharges = 3; torpedoCharges = 2;
+            } else if (selectedSub === 'The Scavenger') {
+                shots = 20; sonarCharges = 2; torpedoCharges = 2;
+            }
+
             grid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill().map(() => ({
                 isShip: false,
                 revealed: false,
@@ -336,10 +482,7 @@
                 coords: []
             }));
 
-            shots = 30;
             hits = 0;
-            sonarCharges = 3;
-            torpedoCharges = 2;
             busterCharges = 0;
             weatherCounter = 10;
             currentWeather = 'Clear Skies';
@@ -348,10 +491,6 @@
             gameActive = true;
             currentMode = 'shoot';
             
-            document.getElementById('overlay').classList.add('hidden');
-            dirSelector.classList.add('hidden');
-            restartModal.classList.add('hidden');
-            
             placeShips();
             calculateNeighbors();
             renderGrid();
@@ -359,11 +498,7 @@
         }
 
         function confirmRestart() {
-            if (!gameActive) {
-                initGame();
-                return;
-            }
-            restartModal.classList.remove('hidden');
+            initGame();
         }
 
         function closeRestartModal() {
@@ -447,8 +582,10 @@
             if (!gameActive) return;
             const data = grid[r][c];
 
+            const isJammed = currentWeather === 'Electrical Storm' && selectedSub !== 'Ghost-6';
+
             if (currentMode === 'sonar') {
-                if (data.revealed || currentWeather === 'Electrical Storm') return;
+                if (data.revealed || isJammed) return;
                 performSonar(r, c);
             } else if (currentMode === 'torpedo' || currentMode === 'buster') {
                 pendingTorpedoOrigin = {r, c};
@@ -492,8 +629,9 @@
                     if (data.revealed && !data.isShip) {
                         const cellEl = document.getElementById(`cell-${r}-${c}`);
                         if (data.neighborShips > 0) {
-                            cellEl.innerText = isGlobalFog ? '?' : data.neighborShips;
-                            cellEl.style.color = isGlobalFog ? '#94a3b8' : getNumberColor(data.neighborShips);
+                            const isObscured = isGlobalFog && selectedSub !== 'Ghost-6';
+                            cellEl.innerText = isObscured ? '?' : data.neighborShips;
+                            cellEl.style.color = isObscured ? '#94a3b8' : getNumberColor(data.neighborShips);
                         }
                     }
                 }
@@ -521,8 +659,9 @@
             } else {
                 cellEl.classList.add('cell-revealed-water');
                 if (data.neighborShips > 0) {
-                    cellEl.innerText = isGlobalFog ? '?' : data.neighborShips;
-                    cellEl.style.color = isGlobalFog ? '#94a3b8' : getNumberColor(data.neighborShips);
+                    const isObscured = isGlobalFog && selectedSub !== 'Ghost-6';
+                    cellEl.innerText = isObscured ? '?' : data.neighborShips;
+                    cellEl.style.color = isObscured ? '#94a3b8' : getNumberColor(data.neighborShips);
                 }
             }
         }
@@ -545,18 +684,19 @@
             if (ship.isSunk) return;
             ship.isSunk = true;
             
-            // Adjust hit counter if ship was sunk by Buster/Torpedo AoE while partially healthy
             const remainingHull = ship.health;
             hits += remainingHull;
             ship.health = 0;
 
+            const multiplier = selectedSub === 'The Scavenger' ? 2 : 1;
+
             if (ship.size === 2) {
-                shots += 5;
-                showStatusText("+5 AMMO SALVAGED", "text-emerald-400");
+                shots += (5 * multiplier);
+                showStatusText(`+${5*multiplier} AMMO SALVAGED`, "text-emerald-400");
             }
             if (ship.size === 5) {
-                busterCharges++;
-                showStatusText("BUSTER TORP ARMED", "text-red-400");
+                busterCharges += (1 * multiplier);
+                showStatusText(`${multiplier} BUSTER READY`, "text-red-400");
             }
 
             ship.coords.forEach(coord => {
@@ -567,7 +707,6 @@
                 el.classList.remove('cell-hidden');
             });
 
-            // Auto-reveal buffer
             ship.coords.forEach(coord => {
                 for (let dr = -1; dr <= 1; dr++) {
                     for (let dc = -1; dc <= 1; dc++) {
@@ -597,7 +736,7 @@
         }
 
         function performSonar(r, c) {
-            if (sonarCharges <= 0 || currentWeather === 'Electrical Storm') return;
+            if (sonarCharges <= 0 || (currentWeather === 'Electrical Storm' && selectedSub !== 'Ghost-6')) return;
             sonarCharges--;
             cancelWeapon();
             for (let dr = -1; dr <= 1; dr++) {
@@ -605,13 +744,14 @@
                     const nr = r + dr, nc = c + dc;
                     if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
                         const cellEl = document.getElementById(`cell-${nr}-${nc}`);
-                        const cellData = grid[nr][nc];
+                        const cellData = grid[nr][nr]; // Fix: cellData should be grid[nr][nc]
+                        const actualCellData = grid[nr][nc];
                         cellEl.classList.add('cell-sonar');
                         setTimeout(() => {
                             cellEl.classList.remove('cell-sonar');
-                            if (cellData.isShip) {
+                            if (actualCellData.isShip) {
                                 cellEl.innerHTML = '<span class="text-sm scale-110 drop-shadow-lg" style="color: #fbbf24; opacity: 1;">🚢</span>';
-                            } else if (!cellData.revealed) {
+                            } else if (!actualCellData.revealed) {
                                 cellEl.innerHTML = '<span class="text-[10px] opacity-20">🌊</span>';
                             }
                         }, 1200);
@@ -653,12 +793,10 @@
                         cellEl.classList.remove('cell-buster-path');
                         cellEl.classList.remove('cell-torpedo-path');
                         
-                        // Impact Logic
                         if (index === path.length - 1 && hitTarget) {
                             if (isBuster) {
                                 sinkShip(shipData[grid[pos.r][pos.c].shipId]);
                             } else {
-                                // Normal Torpedo Explosion (3x3)
                                 for (let dr = -1; dr <= 1; dr++) {
                                     for (let dc = -1; dc <= 1; dc++) {
                                         revealCell(pos.r + dr, pos.c + dc, true);
@@ -692,7 +830,7 @@
             
             weatherText.innerText = currentWeather;
             nextWeatherText.innerText = `Forecast: ${nextWeather} in ${weatherCounter}`;
-            sonarBtn.disabled = (currentWeather === 'Electrical Storm' || sonarCharges <= 0);
+            sonarBtn.disabled = (currentWeather === 'Electrical Storm' && selectedSub !== 'Ghost-6') || sonarCharges <= 0;
             if (fleetElement) fleetElement.innerText = `${totalShipSegments - hits}/${totalShipSegments}`;
 
             fleetDashboard.innerHTML = '';
@@ -728,7 +866,7 @@
             if (win) {
                 title.innerText = "VICTORY";
                 title.className = "text-6xl font-black mb-4 text-emerald-500 tracking-tighter";
-                msg.innerText = `Mission accomplished. Total fleet destruction. Sector neutralized.`;
+                msg.innerText = `Mission accomplished. Final ammo reserves: ${shots}. Sector neutralized.`;
             } else {
                 title.innerText = "DEFEAT";
                 title.className = "text-6xl font-black mb-4 text-red-600 tracking-tighter";
@@ -762,8 +900,9 @@
 
         sonarBtn.onclick = (e) => {
             e.stopPropagation();
+            const isJammed = currentWeather === 'Electrical Storm' && selectedSub !== 'Ghost-6';
             if (currentMode === 'sonar') cancelWeapon();
-            else if (sonarCharges > 0 && currentWeather !== 'Electrical Storm') {
+            else if (sonarCharges > 0 && !isJammed) {
                 cancelWeapon();
                 currentMode = 'sonar';
                 sonarBtn.classList.add('weapon-active');
