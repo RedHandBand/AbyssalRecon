@@ -72,6 +72,12 @@
             z-index: 20;
         }
 
+        .cell-buster-path {
+            background: #ef4444 !important;
+            box-shadow: 0 0 20px #ef4444;
+            z-index: 20;
+        }
+
         .fog-overlay {
             position: absolute;
             inset: 0;
@@ -105,7 +111,7 @@
 
         .weapon-active {
             border-color: white !important;
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
             transform: translateY(-2px);
         }
 
@@ -168,8 +174,8 @@
     <div class="max-w-3xl w-full mb-4">
         <div class="flex justify-between items-end border-b border-slate-700 pb-2">
             <div>
-                <h1 class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter">Abyssal Recon v3.6</h1>
-                <p class="text-[10px] text-slate-400 font-bold tracking-widest">30 AMMO // CONSOLIDATED HUD</p>
+                <h1 class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter">Abyssal Recon v3.7</h1>
+                <p class="text-[10px] text-slate-400 font-bold tracking-widest">30 AMMO // EXPLOSIVE PAYLOADS</p>
             </div>
             <div class="text-right">
                 <div class="text-xl font-bold flex items-center justify-end gap-2">
@@ -185,8 +191,8 @@
             <!-- Generated icons -->
         </div>
 
-        <div class="grid grid-cols-5 gap-2 mt-3">
-            <!-- Wider Weather Panel (2/5 width) -->
+        <div class="grid grid-cols-6 gap-2 mt-3">
+            <!-- Wider Weather Panel (2/6 width) -->
             <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2">
                 <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Weather Systems</div>
                 <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase">Clear Skies</div>
@@ -199,8 +205,13 @@
             </button>
 
             <button id="torpedo-btn" class="bg-amber-900/50 hover:bg-amber-800 p-2 rounded border border-amber-700 transition-all col-span-1">
-                <div class="text-[10px] text-amber-300 uppercase">Torpedo</div>
+                <div class="text-[10px] text-amber-300 uppercase">Torp</div>
                 <div id="torpedo-count" class="text-lg font-bold text-amber-400">2</div>
+            </button>
+
+            <button id="buster-btn" class="bg-red-900/30 hover:bg-red-900/50 p-2 rounded border border-red-900 transition-all col-span-1 disabled:opacity-20">
+                <div class="text-[10px] text-red-400 uppercase">Buster</div>
+                <div id="buster-count" class="text-lg font-bold text-red-500">0</div>
             </button>
 
             <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1">
@@ -225,7 +236,7 @@
         <!-- Torpedo Direction Selector -->
         <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
             <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center">
-                <p class="text-amber-500 font-bold mb-4 uppercase text-sm">Target Vector</p>
+                <p id="target-vector-text" class="text-amber-500 font-bold mb-4 uppercase text-sm">Target Vector</p>
                 <div class="grid grid-cols-3 gap-2">
                     <div></div>
                     <button onclick="fireTorpedoActual('up')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▲</button>
@@ -260,8 +271,9 @@
         </button>
 
         <div class="max-w-xl p-4 bg-slate-800/50 rounded border border-slate-700/50 text-[11px] text-slate-500 leading-tight text-center">
-            <span class="text-emerald-400 font-bold uppercase tracking-wider">Passive Intel:</span>
-            Carrier (5): +1 Torp // Corvette (2): +5 Ammo // Radar (3): Strike Intel
+            <span class="text-red-400 font-bold uppercase tracking-wider">New Weapon Tech:</span>
+            <br>
+            <b class="text-amber-400">Torp Exp:</b> Hits trigger 3x3 reveal // <b class="text-red-500">Buster:</b> Instant kill on any ship contact.
         </div>
     </div>
 
@@ -283,6 +295,7 @@
         let hits = 0;
         let sonarCharges = 3;
         let torpedoCharges = 2;
+        let busterCharges = 0;
         let totalShipSegments = SHIP_TYPES.reduce((a, b) => a + b, 0);
         let shipData = [];
         let gameActive = true;
@@ -300,6 +313,7 @@
         const fleetDashboard = document.getElementById('fleet-dashboard');
         const sonarBtn = document.getElementById('sonar-btn');
         const torpedoBtn = document.getElementById('torpedo-btn');
+        const busterBtn = document.getElementById('buster-btn');
         const dirSelector = document.getElementById('dir-selector');
         const weatherText = document.getElementById('weather-text');
         const nextWeatherText = document.getElementById('next-weather');
@@ -326,6 +340,7 @@
             hits = 0;
             sonarCharges = 3;
             torpedoCharges = 2;
+            busterCharges = 0;
             weatherCounter = 10;
             currentWeather = 'Clear Skies';
             nextWeather = WEATHER_TYPES[Math.floor(Math.random() * WEATHER_TYPES.length)];
@@ -435,9 +450,11 @@
             if (currentMode === 'sonar') {
                 if (data.revealed || currentWeather === 'Electrical Storm') return;
                 performSonar(r, c);
-            } else if (currentMode === 'torpedo') {
+            } else if (currentMode === 'torpedo' || currentMode === 'buster') {
                 pendingTorpedoOrigin = {r, c};
                 dirSelector.classList.remove('hidden');
+                document.getElementById('target-vector-text').innerText = currentMode === 'buster' ? "BUSTER VECTOR" : "TORPEDO VECTOR";
+                document.getElementById('target-vector-text').className = currentMode === 'buster' ? "text-red-500 font-bold mb-4 uppercase text-sm" : "text-amber-500 font-bold mb-4 uppercase text-sm";
             } else {
                 if (data.revealed) return;
                 revealCell(r, c);
@@ -484,6 +501,7 @@
         }
 
         function revealCell(r, c, isFree = false) {
+            if (r < 0 || r >= GRID_SIZE || c < 0 || c >= GRID_SIZE) return;
             const data = grid[r][c];
             if (data.revealed) return;
             
@@ -524,22 +542,32 @@
         }
 
         function sinkShip(ship) {
+            if (ship.isSunk) return;
             ship.isSunk = true;
+            
+            // Adjust hit counter if ship was sunk by Buster/Torpedo AoE while partially healthy
+            const remainingHull = ship.health;
+            hits += remainingHull;
+            ship.health = 0;
+
             if (ship.size === 2) {
                 shots += 5;
                 showStatusText("+5 AMMO SALVAGED", "text-emerald-400");
             }
             if (ship.size === 5) {
-                torpedoCharges++;
-                showStatusText("TORPEDO SALVAGED", "text-amber-400");
+                busterCharges++;
+                showStatusText("BUSTER TORP ARMED", "text-red-400");
             }
 
             ship.coords.forEach(coord => {
                 const el = document.getElementById(`cell-${coord.r}-${coord.c}`);
                 el.classList.add('cell-sunk-ship');
                 el.innerHTML = '⚓';
+                grid[coord.r][coord.c].revealed = true;
+                el.classList.remove('cell-hidden');
             });
 
+            // Auto-reveal buffer
             ship.coords.forEach(coord => {
                 for (let dr = -1; dr <= 1; dr++) {
                     for (let dc = -1; dc <= 1; dc++) {
@@ -550,6 +578,8 @@
                     }
                 }
             });
+            checkGameOver();
+            updateUI();
         }
 
         function showStatusText(text, colorClass) {
@@ -592,12 +622,18 @@
         }
 
         function fireTorpedoActual(dir) {
-            if (torpedoCharges <= 0) return;
-            torpedoCharges--;
+            const isBuster = (currentMode === 'buster');
+            if (isBuster && busterCharges <= 0) return;
+            if (!isBuster && torpedoCharges <= 0) return;
+            
+            if (isBuster) busterCharges--;
+            else torpedoCharges--;
+            
             shots -= 2; 
             dirSelector.classList.add('hidden');
             const {r, c} = pendingTorpedoOrigin;
             cancelWeapon();
+            
             let currR = r, currC = c, hitTarget = false, path = [];
             while (currR >= 0 && currR < GRID_SIZE && currC >= 0 && currC < GRID_SIZE && !hitTarget) {
                 path.push({r: currR, c: currC});
@@ -607,13 +643,32 @@
                 else if (dir === 'left') currC--;
                 else if (dir === 'right') currC++;
             }
+
             path.forEach((pos, index) => {
                 setTimeout(() => {
                     const cellEl = document.getElementById(`cell-${pos.r}-${pos.c}`);
-                    cellEl.classList.add('cell-torpedo-path');
+                    cellEl.classList.add(isBuster ? 'cell-buster-path' : 'cell-torpedo-path');
+                    
                     setTimeout(() => {
+                        cellEl.classList.remove('cell-buster-path');
                         cellEl.classList.remove('cell-torpedo-path');
-                        revealCell(pos.r, pos.c, true);
+                        
+                        // Impact Logic
+                        if (index === path.length - 1 && hitTarget) {
+                            if (isBuster) {
+                                sinkShip(shipData[grid[pos.r][pos.c].shipId]);
+                            } else {
+                                // Normal Torpedo Explosion (3x3)
+                                for (let dr = -1; dr <= 1; dr++) {
+                                    for (let dc = -1; dc <= 1; dc++) {
+                                        revealCell(pos.r + dr, pos.c + dc, true);
+                                    }
+                                }
+                            }
+                        } else {
+                            revealCell(pos.r, pos.c, true);
+                        }
+
                         if (index === path.length - 1) {
                             checkGameOver();
                             updateUI();
@@ -632,6 +687,9 @@
             shotsElement.innerText = shots;
             document.getElementById('sonar-count').innerText = sonarCharges;
             document.getElementById('torpedo-count').innerText = torpedoCharges;
+            document.getElementById('buster-count').innerText = busterCharges;
+            busterBtn.disabled = busterCharges <= 0;
+            
             weatherText.innerText = currentWeather;
             nextWeatherText.innerText = `Forecast: ${nextWeather} in ${weatherCounter}`;
             sonarBtn.disabled = (currentWeather === 'Electrical Storm' || sonarCharges <= 0);
@@ -641,7 +699,7 @@
             shipData.forEach(ship => {
                 const shipContainer = document.createElement('div');
                 shipContainer.className = `ship-indicator ${ship.isSunk ? 'ship-sunk' : ''}`;
-                if (ship.size === 5) shipContainer.style.borderColor = '#f59e0b55';
+                if (ship.size === 5) shipContainer.style.borderColor = '#ef444455';
                 if (ship.size === 2) shipContainer.style.borderColor = '#10b98144';
                 if (ship.size === 3) shipContainer.style.borderColor = '#3b82f644';
                 for (let i = 0; i < ship.size; i++) {
@@ -657,7 +715,7 @@
         }
 
         function checkGameOver() {
-            if (hits === totalShipSegments) endGame(true);
+            if (hits >= totalShipSegments) endGame(true);
             else if (shots <= 0) endGame(false);
         }
 
@@ -670,7 +728,7 @@
             if (win) {
                 title.innerText = "VICTORY";
                 title.className = "text-6xl font-black mb-4 text-emerald-500 tracking-tighter";
-                msg.innerText = `Mission accomplished. Final ammo reserves: ${shots}. Sector neutralized.`;
+                msg.innerText = `Mission accomplished. Total fleet destruction. Sector neutralized.`;
             } else {
                 title.innerText = "DEFEAT";
                 title.className = "text-6xl font-black mb-4 text-red-600 tracking-tighter";
@@ -693,6 +751,7 @@
             currentMode = 'shoot';
             sonarBtn.classList.remove('weapon-active');
             torpedoBtn.classList.remove('weapon-active');
+            busterBtn.classList.remove('weapon-active');
             dirSelector.classList.add('hidden');
             if (statusText) {
                 statusText.innerText = "READY";
@@ -720,6 +779,17 @@
                 currentMode = 'torpedo';
                 torpedoBtn.classList.add('weapon-active');
                 if (statusText) statusText.innerText = "TORPEDO ACTIVE";
+            }
+        };
+
+        busterBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (currentMode === 'buster') cancelWeapon();
+            else if (busterCharges > 0) {
+                cancelWeapon();
+                currentMode = 'buster';
+                busterBtn.classList.add('weapon-active');
+                if (statusText) statusText.innerText = "BUSTER READY";
             }
         };
 
