@@ -201,19 +201,20 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl font-mono">
             <button onclick="initCampaign()" class="group relative bg-slate-900 border border-emerald-500/50 p-8 rounded-xl text-left transition-all hover:bg-slate-800 hover:scale-105 shadow-xl">
-                <div class="absolute top-4 right-4 text-[10px] bg-emerald-900 text-emerald-400 px-2 py-1 rounded font-bold uppercase tracking-widest font-mono">The Hunt</div>
+                <div class="absolute top-4 right-4 text-[10px] bg-emerald-900 text-emerald-400 px-2 py-1 rounded font-bold uppercase tracking-widest">The Hunt</div>
                 <h2 class="text-2xl font-black text-emerald-400 uppercase mb-2">Campaign</h2>
-                <p class="text-xs text-slate-400 leading-relaxed">Navigate the Benthic Survey Map and neutralize the Rift.</p>
+                <p class="text-xs text-slate-400 leading-relaxed">Navigate the Benthic Survey Map, claim permanent upgrades, and neutralize the Rift.</p>
                 <div class="mt-6 flex items-center gap-2 text-emerald-500 font-bold text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">Start Survey <span>→</span></div>
             </button>
 
             <button onclick="initArcade()" class="group relative bg-slate-900 border border-slate-700 p-8 rounded-xl text-left transition-all hover:bg-slate-800 hover:border-blue-500/50 hover:scale-105 shadow-xl">
                 <h2 class="text-2xl font-black text-blue-400 uppercase mb-2">Arcade</h2>
-                <p class="text-xs text-slate-400 leading-relaxed">Single deployment scenario.</p>
+                <p class="text-xs text-slate-400 leading-relaxed">Single deployment scenario. Cleanse a random sector of hostile presence.</p>
                 <div class="mt-6 flex items-center gap-2 text-blue-500 font-bold text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">Quick Deployment <span>→</span></div>
             </button>
         </div>
-        <div class="mt-16 text-[10px] text-slate-600 uppercase tracking-widest font-bold border-t border-slate-800 pt-4 font-mono">Command Center v5.16 // Sync Restored</div>
+
+        <div class="mt-16 text-[10px] text-slate-600 uppercase tracking-widest font-bold border-t border-slate-800 pt-4 font-mono">Command Center v5.18 // Action Logic Restored</div>
     </div>
 
     <!-- Screen 1: Benthic Survey Map -->
@@ -224,127 +225,127 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
             <div class="lg:col-span-2"><div id="overworld-grid" class="grid grid-cols-5 gap-2 w-full bg-slate-900 p-4 rounded-xl border border-slate-800 shadow-2xl"></div></div>
-            <div class="lg:col-span-1 space-y-4 font-mono font-mono">
-                <div class="bg-slate-900/80 border border-emerald-500/30 p-4 rounded-lg shadow-xl font-mono font-mono">
-                    <h2 class="text-[10px] font-black text-emerald-400 uppercase mb-3 border-b border-emerald-900/50 pb-1 uppercase tracking-widest font-mono font-mono">Abyssal Dossier</h2>
-                    <div id="intel-echo-list" class="space-y-2 max-h-60 overflow-y-auto pr-2 text-[10px] text-slate-400 leading-tight italic font-mono font-mono">
+            <div class="lg:col-span-1 space-y-4 font-mono">
+                <div class="bg-slate-900/80 border border-emerald-500/30 p-4 rounded-lg shadow-xl font-mono">
+                    <h2 class="text-[10px] font-black text-emerald-400 uppercase mb-3 border-b border-emerald-900/50 pb-1 uppercase tracking-widest font-mono">Abyssal Dossier</h2>
+                    <div id="intel-echo-list" class="space-y-2 max-h-60 overflow-y-auto pr-2 text-[10px] text-slate-400 leading-tight italic font-mono">
                         <p>Sector clears reveal Arcane Echoes...</p>
                     </div>
                 </div>
-                <div class="bg-slate-800/50 p-4 rounded border border-slate-700 font-mono font-mono">
-                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1 tracking-widest uppercase font-mono font-mono">Fleet Upgrades</p>
-                    <div id="active-upgrades-list" class="text-[9px] text-emerald-400 font-bold space-y-1 text-wrap font-mono font-mono">None</div>
+                <div class="bg-slate-800/50 p-4 rounded border border-slate-700 font-mono">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1 tracking-widest uppercase font-mono">Fleet Upgrades</p>
+                    <div id="active-upgrades-list" class="text-[9px] text-emerald-400 font-bold space-y-1 text-wrap font-mono">None</div>
                 </div>
-                <div class="bg-slate-800/50 p-4 rounded border border-slate-700 flex justify-between items-center font-mono font-mono">
-                    <div><p class="text-[10px] text-slate-400 uppercase font-bold uppercase tracking-widest font-mono font-mono">Salvage</p><div id="salvaged-ammo-display" class="text-xl font-bold text-amber-500 leading-none font-mono font-mono">0</div></div>
-                    <button onclick="mainMenu()" class="text-[9px] text-slate-500 hover:text-red-400 transition-colors uppercase font-bold tracking-widest border border-slate-700 px-3 py-1 rounded italic font-mono font-mono font-mono">Abort</button>
+                <div class="bg-slate-800/50 p-4 rounded border border-slate-700 flex justify-between items-center font-mono">
+                    <div><p class="text-[10px] text-slate-400 uppercase font-bold uppercase tracking-widest font-mono">Salvage</p><div id="salvaged-ammo-display" class="text-xl font-bold text-amber-500 leading-none font-mono">0</div></div>
+                    <button onclick="mainMenu()" class="text-[9px] text-slate-500 hover:text-red-400 transition-colors uppercase font-bold tracking-widest border border-slate-700 px-3 py-1 rounded italic font-mono">Abort</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Screen 2: Reward Choice -->
-    <div id="reward-screen" class="hidden max-w-4xl w-full flex flex-col items-center py-10 px-4 font-mono font-mono">
-        <div class="text-center mb-10 font-mono"><h1 class="text-4xl font-black text-amber-500 uppercase tracking-tighter italic font-mono">Echoes Recovered</h1><p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono font-mono">Tactical Salvage Identified</p></div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-8 font-mono font-mono" id="reward-options-container"></div>
-        <div class="flex flex-col items-center gap-4 font-mono"><button id="reroll-btn" onclick="rerollRewards()" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/50 px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all font-mono font-mono">Reroll (Cost: <span id="reroll-cost">1</span> Ammo)</button></div>
+    <div id="reward-screen" class="hidden max-w-4xl w-full flex flex-col items-center py-10 px-4 font-mono">
+        <div class="text-center mb-10 font-mono"><h1 class="text-4xl font-black text-amber-500 uppercase tracking-tighter italic font-mono">Echoes Recovered</h1><p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono">Tactical Salvage Identified</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-8 font-mono" id="reward-options-container"></div>
+        <div class="flex flex-col items-center gap-4 font-mono"><button id="reroll-btn" onclick="rerollRewards()" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/50 px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all font-mono">Reroll (Cost: <span id="reroll-cost">1</span> Ammo)</button></div>
     </div>
 
     <!-- Screen 3: Deployment Phase -->
-    <div id="deployment-screen" class="hidden max-w-5xl w-full flex flex-col items-center py-10 px-4 font-mono font-mono">
-        <div class="text-center mb-10 font-mono font-mono"><h1 id="brief-title" class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic font-mono font-mono">Mission Briefing</h1><p id="mission-coord-display" class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono font-mono">Sector [0,0]</p></div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full font-mono font-mono font-mono">
-            <div class="md:col-span-1 bg-slate-900 border border-slate-700 p-6 rounded-lg self-start text-left font-mono font-mono font-mono">
-                <h2 class="text-emerald-400 font-bold uppercase text-sm mb-4 border-b border-slate-700 pb-2 tracking-widest uppercase font-mono font-mono font-mono">Tactical Intel</h2>
-                <div class="space-y-4 font-mono font-mono">
-                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-mono">Environment</p><p id="brief-weather" class="text-sm font-bold text-blue-400 uppercase font-mono font-mono">Clear Skies</p></div>
-                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-mono">Signatures</p><p id="brief-fleet" class="text-sm font-bold text-red-400 uppercase font-mono font-mono tracking-tighter font-mono font-mono">7 Confirmed</p></div>
-                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-mono">Objective</p><p id="brief-objective" class="text-[10px] text-slate-400 italic font-mono font-mono">"Intercept hostiles."</p></div>
+    <div id="deployment-screen" class="hidden max-w-5xl w-full flex flex-col items-center py-10 px-4 font-mono">
+        <div class="text-center mb-10 font-mono"><h1 id="brief-title" class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic font-mono">Mission Briefing</h1><p id="mission-coord-display" class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono">Sector [0,0]</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full font-mono">
+            <div class="md:col-span-1 bg-slate-900 border border-slate-700 p-6 rounded-lg self-start text-left font-mono">
+                <h2 class="text-emerald-400 font-bold uppercase text-sm mb-4 border-b border-slate-700 pb-2 tracking-widest uppercase font-mono">Tactical Intel</h2>
+                <div class="space-y-4 font-mono">
+                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Environment</p><p id="brief-weather" class="text-sm font-bold text-blue-400 uppercase font-mono">Clear Skies</p></div>
+                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Signatures</p><p id="brief-fleet" class="text-sm font-bold text-red-400 uppercase font-mono tracking-tighter font-mono">7 Confirmed</p></div>
+                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Objective</p><p id="brief-objective" class="text-[10px] text-slate-400 italic font-mono">"Intercept hostiles."</p></div>
                 </div>
-                <button id="return-map-btn" onclick="showScreen('overworld')" class="mt-6 w-full py-2 border border-slate-700 rounded text-[10px] uppercase font-bold hover:bg-slate-800 font-mono font-mono">Return to Map</button>
+                <button id="return-map-btn" class="mt-6 w-full py-2 border border-slate-700 rounded text-[10px] uppercase font-bold hover:bg-slate-800 font-mono">Return to Map</button>
             </div>
-            <div class="md:col-span-2 space-y-4 text-center md:text-left font-mono font-mono font-mono font-mono">
-                <h2 class="text-slate-300 font-bold uppercase text-sm mb-2 uppercase tracking-widest font-mono font-mono font-mono">Select Asset</h2>
-                <div id="sub-selection-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono font-mono"></div>
+            <div class="md:col-span-2 space-y-4 text-center md:text-left font-mono">
+                <h2 class="text-slate-300 font-bold uppercase text-sm mb-2 uppercase tracking-widest font-mono">Select Asset</h2>
+                <div id="sub-selection-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono"></div>
             </div>
         </div>
     </div>
 
     <!-- Screen 4: Tactical Interface -->
-    <div id="game-screen" class="hidden max-w-6xl w-full py-6 px-4 font-mono font-mono font-mono">
-        <div class="mb-4 max-w-3xl mx-auto font-mono font-mono font-mono">
-            <div class="flex justify-between items-end border-b border-slate-700 pb-2 font-mono font-mono font-mono font-mono">
-                <div><h1 id="sub-name-display" class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter font-mono font-mono font-mono">Nautilus</h1><p id="mode-tag-display" class="text-[10px] text-slate-400 font-bold tracking-widest uppercase italic font-mono font-mono font-mono">DEPLOYED</p></div>
-                <div class="text-right font-mono font-mono font-mono">
-                    <div class="text-xl font-bold flex items-center justify-end gap-2 font-mono font-mono font-mono font-mono"><span id="shots-count">30</span><svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></div>
-                    <div class="text-[10px] uppercase text-slate-500 tracking-widest font-bold font-mono font-mono font-mono">Ammunition</div>
+    <div id="game-screen" class="hidden max-w-6xl w-full py-6 px-4 font-mono">
+        <div class="mb-4 max-w-3xl mx-auto font-mono">
+            <div class="flex justify-between items-end border-b border-slate-700 pb-2 font-mono">
+                <div><h1 id="sub-name-display" class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter font-mono">Nautilus</h1><p id="mode-tag-display" class="text-[10px] text-slate-400 font-bold tracking-widest uppercase italic font-mono">DEPLOYED</p></div>
+                <div class="text-right">
+                    <div class="text-xl font-bold flex items-center justify-end gap-2 font-mono"><span id="shots-count">30</span><svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></div>
+                    <div class="text-[10px] uppercase text-slate-500 tracking-widest font-bold font-mono">Ammunition</div>
                 </div>
             </div>
-            <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800 font-mono font-mono font-mono font-mono font-mono"></div>
-            <div id="merchant-status-panel" class="hidden mt-3 bg-slate-800 p-2 rounded border border-white/20 flex items-center justify-between font-mono font-mono font-mono font-mono">
+            <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800 font-mono"></div>
+            <div id="merchant-status-panel" class="hidden mt-3 bg-slate-800 p-2 rounded border border-white/20 flex items-center justify-between font-mono">
                 <div class="flex items-center gap-2 font-mono"><span class="text-xl">🚢</span><span class="text-[10px] font-bold uppercase tracking-widest font-mono">Freight Integrity</span></div>
                 <div class="flex-1 mx-4 bg-slate-900 h-3 rounded-full border border-slate-700 overflow-hidden font-mono"><div id="merchant-health-bar" class="h-full bg-emerald-500 transition-all duration-500 font-mono" style="width: 100%"></div></div>
                 <div id="merchant-health-text" class="text-xs font-bold font-mono font-mono">5/5</div>
             </div>
-            <div class="grid grid-cols-7 gap-2 mt-3 font-mono font-mono font-mono font-mono font-mono font-mono">
+            <div class="grid grid-cols-7 gap-2 mt-3 font-mono">
                 <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2 font-mono">
-                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter uppercase font-mono font-mono font-mono">Condition</div>
-                    <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase font-mono font-mono font-mono">Clear Skies</div>
-                    <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight font-mono font-mono font-mono">Forecast: Loading...</div>
+                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter uppercase font-mono font-mono">Condition</div>
+                    <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase font-mono font-mono">Clear Skies</div>
+                    <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight font-mono font-mono">Forecast: Loading...</div>
                 </div>
-                <button id="sonar-btn" onclick="activateSonar()" class="bg-emerald-900/50 hover:bg-emerald-800 p-2 rounded border border-emerald-700 transition-all col-span-1 font-mono">
+                <button id="sonar-btn" onclick="activateSonar()" class="bg-emerald-900/50 hover:bg-emerald-800 p-2 rounded border border-emerald-700 transition-all disabled:opacity-30 col-span-1 font-mono">
                     <div class="text-[10px] text-emerald-300 uppercase font-mono">Sonar</div>
-                    <div id="sonar-count" class="text-lg font-bold text-emerald-400 font-mono font-mono font-mono">3</div>
+                    <div id="sonar-count" class="text-lg font-bold text-emerald-400 font-mono font-mono">3</div>
                 </button>
                 <button id="torpedo-btn" onclick="activateTorpedo()" class="bg-amber-900/50 hover:bg-amber-800 p-2 rounded border border-amber-700 transition-all col-span-1 font-mono">
                     <div class="text-[10px] text-amber-300 uppercase font-mono">Torp</div>
-                    <div id="torpedo-count" class="text-lg font-bold text-amber-400 font-mono font-mono font-mono">2</div>
+                    <div id="torpedo-count" class="text-lg font-bold text-amber-400 font-mono font-mono">2</div>
                 </button>
                 <button id="buster-btn" onclick="activateBuster()" class="bg-red-900/30 hover:bg-red-900/50 p-2 rounded border border-red-900 transition-all col-span-1 disabled:opacity-20 font-mono">
                     <div class="text-[10px] text-red-400 uppercase font-mono font-mono">Buster</div>
-                    <div id="buster-count" class="text-lg font-bold text-red-500 font-mono font-mono font-mono">0</div>
+                    <div id="buster-count" class="text-lg font-bold text-red-500 font-mono font-mono">0</div>
                 </button>
                 <button id="advance-btn" onclick="signalAdvanceTurn()" class="hidden bg-slate-700 hover:bg-slate-600 p-2 rounded border border-white/20 transition-all col-span-1 font-mono">
                     <div class="text-[10px] text-slate-300 uppercase font-mono">Signal</div>
-                    <div class="text-xs font-bold text-white uppercase font-mono font-mono font-mono">Advance</div>
+                    <div class="text-xs font-bold text-white uppercase font-mono font-mono">Advance</div>
                 </button>
                 <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1 font-mono">
-                    <div><div class="text-[10px] text-slate-400 uppercase font-bold font-mono font-mono font-mono font-mono">Hull Hits</div><div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter font-mono font-mono font-mono">0/0</div></div>
-                    <div><div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase tracking-tighter font-mono font-mono font-mono">Ready</div></div>
+                    <div><div class="text-[10px] text-slate-400 uppercase font-bold font-mono font-mono font-mono">Hull Hits</div><div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter font-mono font-mono">0/0</div></div>
+                    <div><div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase tracking-tighter font-mono font-mono">Ready</div></div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col lg:flex-row items-start justify-center gap-6 font-mono font-mono font-mono font-mono">
-            <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden font-mono font-mono font-mono">
-                <div class="radar-sweep font-mono font-mono font-mono font-mono"></div>
-                <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900 font-mono font-mono font-mono" style="width: min(95vw, 600px);"></div>
-                <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm font-mono font-mono font-mono">
-                    <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center font-mono font-mono font-mono">
-                        <p id="target-vector-text" class="text-amber-500 font-bold mb-4 uppercase text-sm font-mono font-mono font-mono">Target Vector</p>
-                        <div class="grid grid-cols-3 gap-2 font-mono font-mono font-mono font-mono">
-                            <div></div><button id="btn-up" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono font-mono font-mono font-mono">▲</button><div></div>
-                            <button id="btn-left" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono font-mono font-mono font-mono">◀</button>
-                            <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs font-mono font-mono font-mono font-bold font-mono">X</button>
-                            <button id="btn-right" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono font-mono font-mono font-mono">▶</button>
-                            <div></div><button id="btn-down" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono font-mono font-mono font-mono">▼</button><div></div>
+        <div class="flex flex-col lg:flex-row items-start justify-center gap-6 font-mono">
+            <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden font-mono">
+                <div class="radar-sweep font-mono"></div>
+                <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900 font-mono" style="width: min(95vw, 600px);"></div>
+                <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm font-mono">
+                    <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center font-mono">
+                        <p id="target-vector-text" class="text-amber-500 font-bold mb-4 uppercase text-sm font-mono">Target Vector</p>
+                        <div class="grid grid-cols-3 gap-2 font-mono">
+                            <div></div><button id="btn-up" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">▲</button><div></div>
+                            <button id="btn-left" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">◀</button>
+                            <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs font-mono font-bold font-mono">X</button>
+                            <button id="btn-right" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">▶</button>
+                            <div></div><button id="btn-down" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">▼</button><div></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="w-full lg:w-80 h-[300px] lg:h-[608px] bg-slate-900/80 border border-slate-700 rounded-lg flex flex-col shadow-2xl font-mono font-mono font-mono">
-                <div class="p-3 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center text-center font-mono font-mono font-mono"><h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 font-mono font-mono font-mono font-mono"><span class="w-2 h-2 bg-red-500 rounded-full animate-pulse font-mono font-mono font-mono font-mono"></span>Telemetry Feed</h2></div>
-                <div id="battle-log" class="flex-1 overflow-y-auto p-4 space-y-3 font-mono font-mono font-mono font-mono"></div>
+            <div class="w-full lg:w-80 h-[300px] lg:h-[608px] bg-slate-900/80 border border-slate-700 rounded-lg flex flex-col shadow-2xl font-mono">
+                <div class="p-3 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center text-center font-mono"><h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 font-mono font-mono font-mono"><span class="w-2 h-2 bg-red-500 rounded-full animate-pulse font-mono font-mono font-mono"></span>Telemetry Feed</h2></div>
+                <div id="battle-log" class="flex-1 overflow-y-auto p-4 space-y-3 font-mono"></div>
             </div>
         </div>
-        <div class="mt-8 flex flex-col items-center gap-4 font-mono font-mono font-mono font-mono font-mono"><button onclick="abortMatch()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30 italic font-mono font-mono font-mono font-mono">Abort Survey</button></div>
+        <div class="mt-8 flex flex-col items-center gap-4 font-mono"><button onclick="abortMatch()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30 italic font-mono">Abort Survey</button></div>
     </div>
 
-    <div id="overlay" class="hidden fixed inset-0 bg-slate-900/95 flex flex-col items-center justify-center z-[100] p-6 text-center font-mono font-mono font-mono font-mono font-mono">
-        <h2 id="overlay-title" class="text-6xl font-black mb-4 tracking-tighter uppercase font-mono font-mono font-mono font-mono">DEFEAT</h2>
-        <p id="overlay-msg" class="text-xl text-slate-400 mb-8 max-w-md italic font-mono font-mono font-mono font-mono"></p>
-        <div class="flex gap-4 font-mono font-mono font-mono">
-            <button id="end-action-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-12 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-900/20 uppercase tracking-widest italic font-mono font-mono font-mono font-mono">Main Menu</button>
-            <button id="secondary-action-btn" class="hidden bg-red-900/50 hover:bg-red-800 text-red-200 font-bold py-4 px-12 rounded-full transition-all border border-red-700 uppercase tracking-widest italic font-mono font-mono font-mono font-mono">Abandon</button>
+    <div id="overlay" class="hidden fixed inset-0 bg-slate-900/95 flex flex-col items-center justify-center z-[100] p-6 text-center font-mono">
+        <h2 id="overlay-title" class="text-6xl font-black mb-4 tracking-tighter uppercase font-mono">DEFEAT</h2>
+        <p id="overlay-msg" class="text-xl text-slate-400 mb-8 max-w-md italic font-mono"></p>
+        <div class="flex gap-4 font-mono">
+            <button id="end-action-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-12 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-900/20 uppercase tracking-widest italic font-mono">Main Menu</button>
+            <button id="secondary-action-btn" class="hidden bg-red-900/50 hover:bg-red-800 text-red-200 font-bold py-4 px-12 rounded-full transition-all border border-red-700 uppercase tracking-widest italic font-mono">Abandon</button>
         </div>
     </div>
 
@@ -387,7 +388,7 @@
             const colors = { 'info': 'text-blue-400', 'hit': 'text-red-500', 'miss': 'text-slate-500', 'salvage': 'text-emerald-400', 'weapon': 'text-amber-500', 'warning': 'text-orange-500 font-bold' };
             const entry = document.createElement('div'); entry.className = `log-entry p-2 bg-slate-950/40 rounded text-[10px] ${colors[type] || colors.info}`;
             const ts = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            entry.innerHTML = `<span class="text-[8px] opacity-30 mr-2 font-mono font-mono">${ts}</span> ${msg}`;
+            entry.innerHTML = `<span class="text-[8px] opacity-30 mr-2 font-mono">${ts}</span> ${msg}`;
             logContainer.prepend(entry);
         }
 
@@ -455,7 +456,7 @@
             'REGENERATIVE': 'Hostile entity can heal partially damaged components if not fully neutralized quickly.'
         };
 
-        // --- SOUND ENGINE (SFX ONLY) ---
+        // --- SOUND ENGINE ---
         const Sound = (function() {
             let ctx = null, noiseBuffer = null;
             let bgmNodes = { drone: null, tension: null, melody: null, dGain: null, tGain: null, mGain: null, filter: null };
@@ -576,48 +577,6 @@
         let selectedSub = 'Nautilus', currentMissionPos = null, isEscort = false, isBoss = false;
         let merchantPos = {r: 14, c: 14}, merchantHealth = 5, merchantMaxHealth = 5, merchantPath = [];
 
-        // --- CORE FUNCTIONS ---
-        function initCampaign() {
-            Sound.init(); Sound.startMusic();
-            gameMode = 'campaign'; playerUpgrades = []; salvagedAmmo = 0; playerPos = {r: 0, c: 0}; riftHints = [];
-            mapData = Array(5).fill().map(() => Array(5).fill().map(() => ({ status: 'locked', hint: null })));
-            mapMissionTypes = Array(5).fill().map((_, r) => Array(5).fill().map((_, c) => (r+c > 2 && Math.random() < 0.4 ? 'ESC' : 'BTL')));
-            riftPos = { r: 3 + Math.floor(Math.random()*2), c: 3 + Math.floor(Math.random()*2) };
-            if (riftPos.r + riftPos.c < 6) riftPos = {r: 4, c: 4};
-            mapMissionTypes[riftPos.r][riftPos.c] = 'RIFT';
-            mapData[0][0].status = 'current';
-            showScreen('overworld');
-        }
-
-        function initArcade() { Sound.init(); Sound.startMusic(); gameMode = 'arcade'; playerUpgrades = []; salvagedAmmo = 0; isEscort = false; isBoss = false; showBriefing(1, 1); }
-
-        function mainMenu() { Sound.stopMusic(); document.getElementById('overlay').classList.add('hidden'); showScreen('title'); }
-
-        function renderOverworld() {
-            const container = document.getElementById('overworld-grid'); container.innerHTML = '';
-            for(let r=0; r<5; r++) for(let c=0; c<5; c++) {
-                const cell = mapData[r][c];
-                if (!['current', 'visited'].includes(cell.status) && isAdjacentToVisited(r, c)) if (cell.status === 'locked') cell.status = 'mission';
-                const tile = document.createElement('div'), mType = mapMissionTypes[r][c];
-                const currentStatus = mapData[r][c].status;
-                tile.className = `map-tile rounded-lg border-2 ${getTileClass(r, c)}`;
-                if (r === 0 && c === 0 && (currentStatus === 'current' || currentStatus === 'visited')) tile.innerHTML = '<span class="text-[10px] font-black text-emerald-400 uppercase">HQ</span>';
-                else if (currentStatus === 'locked') tile.innerHTML = '<span class="text-xl font-bold opacity-20">?</span>';
-                else if (currentStatus === 'mission') {
-                    const label = mType === 'ESC' ? 'ESCORT' : (mType === 'RIFT' ? 'THE RIFT' : 'BATTLE'), colorClass = mType === 'RIFT' ? 'text-purple-400 animate-pulse' : 'text-amber-500';
-                    tile.innerHTML = `<span class="text-[9px] font-bold ${colorClass}">${label}</span><span class="text-[7px] opacity-50 uppercase font-bold tracking-tighter">Dist ${r+c}</span>`;
-                    tile.onclick = () => { Sound.ui(); showBriefing(r, c); };
-                } else if (currentStatus === 'current') tile.innerHTML = '<span class="text-sm">⚓</span>';
-                else if (currentStatus === 'visited') {
-                    tile.innerHTML = '<span class="text-[8px] text-slate-600 uppercase font-bold">Clear</span>';
-                    if (cell.hint) { tile.innerHTML += '<div class="absolute top-1 right-1 text-[8px]">👁️</div>'; tile.dataset.hint = cell.hint; }
-                }
-                container.appendChild(tile);
-            }
-            document.getElementById('salvaged-ammo-display').innerText = salvagedAmmo;
-            document.getElementById('active-upgrades-list').innerText = playerUpgrades.length > 0 ? playerUpgrades.map(u => UPGRADES.find(ref => ref.id === u).name).join(', ') : 'None';
-        }
-
         // --- TURN LOGIC (CENTRALIZED) ---
         function advanceTurn() {
             if (!gameActive) return;
@@ -647,16 +606,59 @@
                 for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) { const cell = document.getElementById(`cell-${r}-${c}`); if(cell) { const fog = document.createElement('div'); fog.className = 'fog-overlay'; cell.appendChild(fog); } }
             }
             for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) { 
-                const data = grid[r][c]; 
-                if (data.revealed && !data.isShip) { 
+                const d = grid[r][c]; 
+                if (d.revealed && !d.isShip) { 
                     const el = document.getElementById(`cell-${r}-${c}`); 
-                    if (el && data.neighborShips > 0) { 
+                    if (el && d.neighborShips > 0) { 
                         const iO = isGlobalFog && selectedSub !== 'Ghost-6'; 
-                        el.innerText = iO ? '?' : data.neighborShips; 
-                        el.style.color = iO ? '#94a3b8' : getNumberColor(data.neighborShips); 
+                        el.innerText = iO ? '?' : d.neighborShips; 
+                        el.style.color = iO ? '#94a3b8' : getNumberColor(d.neighborShips); 
                     } 
                 } 
             }
+        }
+
+        // --- CORE FUNCTIONS ---
+        function initCampaign() {
+            Sound.init(); Sound.startMusic();
+            gameMode = 'campaign'; playerUpgrades = []; salvagedAmmo = 0; playerPos = {r: 0, c: 0}; riftHints = [];
+            mapData = Array(5).fill().map(() => Array(5).fill().map(() => ({ status: 'locked', hint: null })));
+            mapMissionTypes = Array(5).fill().map((_, r) => Array(5).fill().map((_, c) => (r+c > 2 && Math.random() < 0.4 ? 'ESC' : 'BTL')));
+            riftPos = { r: 3 + Math.floor(Math.random()*2), c: 3 + Math.floor(Math.random()*2) };
+            if (riftPos.r + riftPos.c < 6) riftPos = {r: 4, c: 4};
+            mapMissionTypes[riftPos.r][riftPos.c] = 'RIFT';
+            mapData[0][0].status = 'current';
+            showScreen('overworld');
+        }
+
+        function initArcade() { Sound.init(); Sound.startMusic(); gameMode = 'arcade'; playerUpgrades = []; salvagedAmmo = 0; isEscort = false; isBoss = false; showBriefing(1, 1); }
+
+        function mainMenu() { document.getElementById('overlay').classList.add('hidden'); Sound.stopMusic(); showScreen('title'); }
+
+        function renderOverworld() {
+            const container = document.getElementById('overworld-grid'); container.innerHTML = '';
+            const dTotal = playerPos.r + playerPos.c; Sound.setIntensity(isBoss ? 1.0 : dTotal / 8); 
+            for(let r=0; r<5; r++) for(let c=0; c<5; c++) {
+                const cell = mapData[r][c];
+                if (!['current', 'visited'].includes(cell.status) && isAdjacentToVisited(r, c)) if (cell.status === 'locked') cell.status = 'mission';
+                const tile = document.createElement('div'), mType = mapMissionTypes[r][c];
+                const currentStatus = mapData[r][c].status;
+                tile.className = `map-tile rounded-lg border-2 ${getTileClass(r, c)}`;
+                if (r === 0 && c === 0 && (currentStatus === 'current' || currentStatus === 'visited')) tile.innerHTML = '<span class="text-[10px] font-black text-emerald-400 uppercase">HQ</span>';
+                else if (currentStatus === 'locked') tile.innerHTML = '<span class="text-xl font-bold opacity-20">?</span>';
+                else if (currentStatus === 'mission') {
+                    const label = mType === 'ESC' ? 'ESCORT' : (mType === 'RIFT' ? 'THE RIFT' : 'BATTLE'), colorClass = mType === 'RIFT' ? 'text-purple-400 animate-pulse' : 'text-amber-500';
+                    tile.innerHTML = `<span class="text-[9px] font-bold ${colorClass}">${label}</span><span class="text-[7px] opacity-50 uppercase font-bold tracking-tighter">Dist ${r+c}</span>`;
+                    tile.onclick = () => { Sound.ui(); showBriefing(r, c); };
+                } else if (currentStatus === 'current') tile.innerHTML = '<span class="text-sm">⚓</span>';
+                else if (currentStatus === 'visited') {
+                    tile.innerHTML = '<span class="text-[8px] text-slate-600 uppercase font-bold">Clear</span>';
+                    if (cell.hint) { tile.innerHTML += '<div class="absolute top-1 right-1 text-[8px]">👁️</div>'; tile.dataset.hint = cell.hint; }
+                }
+                container.appendChild(tile);
+            }
+            document.getElementById('salvaged-ammo-display').innerText = salvagedAmmo;
+            document.getElementById('active-upgrades-list').innerText = playerUpgrades.length > 0 ? playerUpgrades.map(u => UPGRADES.find(ref => ref.id === u).name).join(', ') : 'None';
         }
 
         // --- BATTLE ACTIONS ---
@@ -666,6 +668,16 @@
             isBoss = (gameMode === 'campaign' && mapMissionTypes[r][c] === 'RIFT');
             document.getElementById('brief-title').innerText = isBoss ? "The Abyssal Rift" : (isEscort ? "Escort Protocol" : "Sector Neutralization");
             document.getElementById('mission-coord-display').innerText = gameMode === 'arcade' ? 'Standard Simulation' : `Sector [${r+1}-${c+1}]`;
+            
+            const backBtn = document.getElementById('return-map-btn');
+            if (gameMode === 'arcade') {
+                backBtn.innerText = "Return to Main Menu";
+                backBtn.onclick = mainMenu;
+            } else {
+                backBtn.innerText = "Return to Map";
+                backBtn.onclick = () => showScreen('overworld');
+            }
+
             if (isBoss) { currentShipTypes = [...BOSS_FLEET]; document.getElementById('brief-objective').innerText = "Anomalous entity detected. Terminate the Elder Core."; } 
             else {
                 const extra = Math.floor(dist / 3); currentShipTypes = [...BASE_FLEET]; for(let i=0; i<extra; i++) currentShipTypes.push(2);
@@ -693,7 +705,7 @@
                 const card = document.createElement('div'); card.onclick = () => { Sound.ui(); selectedSub = sub.id; startMission(); };
                 card.className = 'sub-card p-4 rounded-lg bg-slate-800/50 flex flex-col justify-between h-full font-mono';
                 card.innerHTML = `
-                    <div><div class="flex justify-between items-start mb-2"><h3 class="text-${sub.color}-400 font-bold uppercase text-xs">${sub.id}</h3><span class="text-[8px] bg-${sub.color}-900/50 text-${sub.color}-300 px-1 rounded uppercase font-bold tracking-widest">${sub.tag}</span></div><p class="text-[9px] text-slate-400 mb-3 italic leading-snug font-mono">${sub.perk}</p></div>
+                    <div><div class="flex justify-between items-start mb-2"><h3 class="text-${sub.color}-400 font-bold uppercase text-xs">${sub.id}</h3><span class="text-[8px] bg-${sub.color}-900/50 text-${sub.color}-300 px-1 rounded uppercase font-bold tracking-widest">${sub.tag}</span></div><p class="text-[9px] text-slate-400 mb-3 italic leading-snug">${sub.perk}</p></div>
                     <div class="stat-row font-mono"><span>Ammo</span><span>${sub.ammo + bA}</span></div>
                     <div class="stat-row font-mono"><span>Sonar</span><span>${sub.sonar + bS}</span></div>
                     <div class="stat-row font-mono"><span>Torp</span><span>${sub.torp + bT}</span></div>`;
@@ -712,7 +724,16 @@
             shots = ss[0] + playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.shots || 0), 0);
             sonarCharges = ss[1] + playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.sonar || 0), 0);
             torpedoCharges = ss[2] + playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.torps || 0), 0);
-            grid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill().map(() => ({ isShip: false, revealed: false, neighborShips: 0, shipId: null })));
+            
+            // Re-initialize grid safely using loop
+            grid = [];
+            for (let r = 0; r < GRID_SIZE; r++) {
+                grid[r] = [];
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    grid[r][c] = { isShip: false, revealed: false, neighborShips: 0, shipId: null };
+                }
+            }
+
             shipData = currentShipTypes.map((size, index) => ({ id: index, size, health: size, isSunk: false, coords: [], isAlien: false }));
             hits = 0; busterCharges = 0; weatherCounter = 10; currentWeather = isBoss ? 'Electrical Storm' : 'Clear Skies'; nextWeather = WEATHER_TYPES[Math.floor(Math.random() * (WEATHER_TYPES.length - 1))];
             isGlobalFog = false; gameActive = true; currentMode = 'shoot';
@@ -815,7 +836,15 @@
                     } else { const h = Math.random() < 0.5; shape = Array.from({length: ship.size}, (_, i) => h ? [0, i] : [i, 0]); }
                     if (canPlaceShape(r, c, shape)) {
                         const actualCoords = [];
-                        shape.forEach(offset => { const nr = r + offset[0], nc = c + offset[1]; grid[nr][nc].isShip = true; grid[nr][nc].shipId = ship.id; ship.coords.push({r: nr, c: nc}); actualCoords.push({r: nr, c: nc}); });
+                        shape.forEach(offset => { 
+                            const nr = r + offset[0], nc = c + offset[1]; 
+                            if (grid[nr] && grid[nr][nc]) {
+                                grid[nr][nc].isShip = true; 
+                                grid[nr][nc].shipId = ship.id; 
+                                ship.coords.push({r: nr, c: nc}); 
+                                actualCoords.push({r: nr, c: nc}); 
+                            }
+                        });
                         ship.isAlien = !isLinear(actualCoords); placed = true;
                     } attempts++;
                 }
@@ -855,21 +884,32 @@
         function generateMerchantPath() { merchantPath = []; let r = 14, c = 14; merchantPath.push({r, c}); while (r > 0 || c > 0) { if (r > 0 && c > 0) { if (Math.random() < 0.5) r--; else c--; } else if (r > 0) r--; else c--; merchantPath.push({r, c}); } }
 
         function checkGameOver() { if (isBoss && shipData[0].isSunk) endGame(true); else if (hits >= totalShipSegments) endGame(true); else if (shots <= 0 && gameActive) endGame(false); else if (isEscort && (merchantHealth <= 0 || (merchantPos.r === 0 && merchantPos.c === 0))) { if(merchantHealth <= 0) endGame(false); else endGame(true); } }
+        
         function endGame(win) {
-            gameActive = false; win ? Sound.victory() : Sound.defeat(); Sound.stopMusic(); 
+            gameActive = false; win ? Sound.victory() : Sound.defeat();
             for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) { const el = document.getElementById(`cell-${r}-${c}`), d = grid[r][c]; if (el && !d.revealed && d.isShip) { el.classList.remove('cell-hidden'); el.classList.add('bg-slate-700/50'); el.innerHTML = shipData[d.shipId].isAlien ? '🐙' : '🚢'; } }
             setTimeout(() => {
                 const overlay = document.getElementById('overlay'), title = document.getElementById('overlay-title'), msg = document.getElementById('overlay-msg'), b1 = document.getElementById('end-action-btn'), b2 = document.getElementById('secondary-action-btn');
                 overlay.classList.remove('hidden'); b2.classList.add('hidden');
                 if (win) {
                     title.innerText = isBoss ? "ANOMALY SEALED" : "VICTORY"; title.className = "text-6xl font-black mb-4 text-emerald-500 tracking-tighter uppercase italic font-mono";
-                    if (isBoss) { msg.innerText = "The Abyssal Rift is closed. Expedition successful."; b1.onclick = () => mainMenu(); }
-                    else if (gameMode === 'campaign') { msg.innerText = `Sector secured. ${shots} ammo salvaged. Arcane echo recovered.`; b1.onclick = () => { salvagedAmmo += shots; mapData[currentMissionPos.r][currentMissionPos.c].hint = generateRiftHint(); showScreen('reward'); overlay.classList.add('hidden'); }; }
-                    else { msg.innerText = `Sector clear. Assignment ended.`; b1.onclick = () => mainMenu(); }
+                    if (isBoss) { msg.innerText = "The Abyssal Rift is closed. Expedition successful."; b1.innerText = "Main Menu"; b1.onclick = mainMenu; }
+                    else if (gameMode === 'campaign') { msg.innerText = `Sector secured. ${shots} ammo salvaged. Arcane echo recovered.`; b1.innerText = "Claim Rewards"; b1.onclick = () => { salvagedAmmo += shots; mapData[currentMissionPos.r][currentMissionPos.c].hint = generateRiftHint(); showScreen('reward'); overlay.classList.add('hidden'); }; }
+                    else { msg.innerText = `Sector clear. Assignment ended.`; b1.innerText = "Main Menu"; b1.onclick = mainMenu; }
                 } else {
                     title.innerText = "DEFEAT"; title.className = "text-6xl font-black mb-4 text-red-600 tracking-tighter uppercase italic font-mono";
-                    msg.innerText = isEscort && merchantHealth <= 0 ? "Vessel lost. search area compromised." : "Simulation ended.";
-                    b1.onclick = () => mainMenu();
+                    if (gameMode === 'campaign') {
+                        msg.innerText = isEscort && merchantHealth <= 0 ? "Vessel lost. search area compromised." : "Ordinance failure. Hostiles escaped.";
+                        b1.innerText = "Retry Sector";
+                        b1.onclick = () => { overlay.classList.add('hidden'); startMission(); };
+                        b2.classList.remove('hidden');
+                        b2.innerText = "Abandon Campaign";
+                        b2.onclick = mainMenu;
+                    } else {
+                        msg.innerText = "Simulation ended.";
+                        b1.innerText = "Main Menu";
+                        b1.onclick = mainMenu;
+                    }
                 }
             }, 1500);
         }
