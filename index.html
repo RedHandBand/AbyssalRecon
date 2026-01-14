@@ -164,7 +164,6 @@
         }
         .tile-hq { background: #064e3b; border-color: #10b981; }
         .tile-mission { background: #1e293b; cursor: pointer; }
-        .tile-mission:hover { background: #334155; border-color: #fbbf24; }
         .tile-locked { background: #0f172a; opacity: 0.5; color: #475569; }
         .tile-current { box-shadow: inset 0 0 15px #10b981; border-color: #10b981; z-index: 10; }
         .tile-visited { background: #0f172a; border-color: #1e293b; opacity: 0.8; }
@@ -196,49 +195,48 @@
         <div class="mb-16 relative">
             <div class="absolute -inset-10 bg-emerald-500/10 blur-3xl rounded-full"></div>
             <h1 class="text-7xl font-black text-emerald-500 uppercase tracking-tighter italic glitch-text mb-2 text-wrap break-words max-w-full font-mono">Abyssal Recon</h1>
-            <p class="text-slate-400 font-bold tracking-[0.5em] text-sm uppercase font-mono">Deduction-Based Naval Warfare</p>
+            <p class="text-slate-400 font-bold tracking-[0.5em] text-sm uppercase font-mono">Tactical Subsurface Matrix</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl font-mono">
             <button onclick="initCampaign()" class="group relative bg-slate-900 border border-emerald-500/50 p-8 rounded-xl text-left transition-all hover:bg-slate-800 hover:scale-105 shadow-xl">
-                <div class="absolute top-4 right-4 text-[10px] bg-emerald-900 text-emerald-400 px-2 py-1 rounded font-bold uppercase tracking-widest">The Hunt</div>
+                <div class="absolute top-4 right-4 text-[10px] bg-emerald-900 text-emerald-400 px-2 py-1 rounded font-bold uppercase tracking-widest">Operation Redline</div>
                 <h2 class="text-2xl font-black text-emerald-400 uppercase mb-2">Campaign</h2>
-                <p class="text-xs text-slate-400 leading-relaxed">Navigate the Benthic Survey Map, claim permanent upgrades, and neutralize the Rift.</p>
-                <div class="mt-6 flex items-center gap-2 text-emerald-500 font-bold text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">Start Survey <span>→</span></div>
+                <p class="text-xs text-slate-400 leading-relaxed">Navigate the Benthic Survey Map and investigate unidentified signal sources.</p>
+                <div class="mt-6 flex items-center gap-2 text-emerald-500 font-bold text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">Begin Operation <span>→</span></div>
             </button>
 
             <button onclick="initArcade()" class="group relative bg-slate-900 border border-slate-700 p-8 rounded-xl text-left transition-all hover:bg-slate-800 hover:border-blue-500/50 hover:scale-105 shadow-xl">
                 <h2 class="text-2xl font-black text-blue-400 uppercase mb-2">Arcade</h2>
-                <p class="text-xs text-slate-400 leading-relaxed">Single deployment scenario. Cleanse a random sector of hostile presence.</p>
+                <p class="text-xs text-slate-400 leading-relaxed">Single deployment scenario. Standard search and destroy mission.</p>
                 <div class="mt-6 flex items-center gap-2 text-blue-500 font-bold text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">Quick Deployment <span>→</span></div>
             </button>
         </div>
-
-        <div class="mt-16 text-[10px] text-slate-600 uppercase tracking-widest font-bold border-t border-slate-800 pt-4 font-mono">Command Center v5.18 // Action Logic Restored</div>
+        <div class="mt-16 text-[10px] text-slate-600 uppercase tracking-widest font-bold border-t border-slate-800 pt-4 font-mono">Command Center v5.20 // Signal Source Tracking</div>
     </div>
 
     <!-- Screen 1: Benthic Survey Map -->
     <div id="overworld-screen" class="hidden max-w-4xl w-full flex flex-col items-center py-10">
         <div class="text-center mb-8 px-4 font-mono">
-            <h1 class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic font-mono">Benthic Survey Map</h1>
-            <p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono">Sub-Surface Operational Matrix</p>
+            <h1 class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic">Benthic Survey Map</h1>
+            <p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase">Operational Grid</p>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
             <div class="lg:col-span-2"><div id="overworld-grid" class="grid grid-cols-5 gap-2 w-full bg-slate-900 p-4 rounded-xl border border-slate-800 shadow-2xl"></div></div>
             <div class="lg:col-span-1 space-y-4 font-mono">
-                <div class="bg-slate-900/80 border border-emerald-500/30 p-4 rounded-lg shadow-xl font-mono">
-                    <h2 class="text-[10px] font-black text-emerald-400 uppercase mb-3 border-b border-emerald-900/50 pb-1 uppercase tracking-widest font-mono">Abyssal Dossier</h2>
-                    <div id="intel-echo-list" class="space-y-2 max-h-60 overflow-y-auto pr-2 text-[10px] text-slate-400 leading-tight italic font-mono">
-                        <p>Sector clears reveal Arcane Echoes...</p>
+                <div class="bg-slate-900/80 border border-emerald-500/30 p-4 rounded-lg shadow-xl">
+                    <h2 class="text-[10px] font-black text-emerald-400 uppercase mb-3 border-b border-emerald-900/50 pb-1 uppercase tracking-widest">Signal Intelligence</h2>
+                    <div id="intel-echo-list" class="space-y-2 max-h-60 overflow-y-auto pr-2 text-[10px] text-slate-400 leading-tight italic">
+                        <p>Cleared sectors reveal signal traces...</p>
                     </div>
                 </div>
-                <div class="bg-slate-800/50 p-4 rounded border border-slate-700 font-mono">
-                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1 tracking-widest uppercase font-mono">Fleet Upgrades</p>
-                    <div id="active-upgrades-list" class="text-[9px] text-emerald-400 font-bold space-y-1 text-wrap font-mono">None</div>
+                <div class="bg-slate-800/50 p-4 rounded border border-slate-700">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1 tracking-widest uppercase">Fleet Status</p>
+                    <div id="active-upgrades-list" class="text-[9px] text-emerald-400 font-bold space-y-1 text-wrap">None</div>
                 </div>
                 <div class="bg-slate-800/50 p-4 rounded border border-slate-700 flex justify-between items-center font-mono">
-                    <div><p class="text-[10px] text-slate-400 uppercase font-bold uppercase tracking-widest font-mono">Salvage</p><div id="salvaged-ammo-display" class="text-xl font-bold text-amber-500 leading-none font-mono">0</div></div>
-                    <button onclick="mainMenu()" class="text-[9px] text-slate-500 hover:text-red-400 transition-colors uppercase font-bold tracking-widest border border-slate-700 px-3 py-1 rounded italic font-mono">Abort</button>
+                    <div><p class="text-[10px] text-slate-400 uppercase font-bold uppercase tracking-widest">Salvage</p><div id="salvaged-ammo-display" class="text-xl font-bold text-amber-500 leading-none">0</div></div>
+                    <button onclick="mainMenu()" class="text-[9px] text-slate-500 hover:text-red-400 transition-colors uppercase font-bold tracking-widest border border-slate-700 px-3 py-1 rounded italic">Abort</button>
                 </div>
             </div>
         </div>
@@ -246,111 +244,111 @@
 
     <!-- Screen 2: Reward Choice -->
     <div id="reward-screen" class="hidden max-w-4xl w-full flex flex-col items-center py-10 px-4 font-mono">
-        <div class="text-center mb-10 font-mono"><h1 class="text-4xl font-black text-amber-500 uppercase tracking-tighter italic font-mono">Echoes Recovered</h1><p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono">Tactical Salvage Identified</p></div>
+        <div class="text-center mb-10 font-mono"><h1 class="text-4xl font-black text-amber-500 uppercase tracking-tighter italic">Signal Logs Interpreted</h1><p class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase">Tactical Recovery Available</p></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-8 font-mono" id="reward-options-container"></div>
         <div class="flex flex-col items-center gap-4 font-mono"><button id="reroll-btn" onclick="rerollRewards()" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/50 px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all font-mono">Reroll (Cost: <span id="reroll-cost">1</span> Ammo)</button></div>
     </div>
 
     <!-- Screen 3: Deployment Phase -->
     <div id="deployment-screen" class="hidden max-w-5xl w-full flex flex-col items-center py-10 px-4 font-mono">
-        <div class="text-center mb-10 font-mono"><h1 id="brief-title" class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic font-mono">Mission Briefing</h1><p id="mission-coord-display" class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono">Sector [0,0]</p></div>
+        <div class="text-center mb-10 font-mono"><h1 id="brief-title" class="text-4xl font-black text-emerald-500 uppercase tracking-tighter italic">Mission Briefing</h1><p id="mission-coord-display" class="text-slate-500 font-bold tracking-widest text-xs mt-2 uppercase font-mono">Sector [0,0]</p></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full font-mono">
             <div class="md:col-span-1 bg-slate-900 border border-slate-700 p-6 rounded-lg self-start text-left font-mono">
-                <h2 class="text-emerald-400 font-bold uppercase text-sm mb-4 border-b border-slate-700 pb-2 tracking-widest uppercase font-mono">Tactical Intel</h2>
+                <h2 class="text-emerald-400 font-bold uppercase text-sm mb-4 border-b border-slate-700 pb-2 tracking-widest uppercase">Tactical Intel</h2>
                 <div class="space-y-4 font-mono">
-                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Environment</p><p id="brief-weather" class="text-sm font-bold text-blue-400 uppercase font-mono">Clear Skies</p></div>
-                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Signatures</p><p id="brief-fleet" class="text-sm font-bold text-red-400 uppercase font-mono tracking-tighter font-mono">7 Confirmed</p></div>
-                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Objective</p><p id="brief-objective" class="text-[10px] text-slate-400 italic font-mono">"Intercept hostiles."</p></div>
+                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest">Environment</p><p id="brief-weather" class="text-sm font-bold text-blue-400 uppercase">Clear Skies</p></div>
+                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest">Signatures</p><p id="brief-fleet" class="text-sm font-bold text-red-400 uppercase tracking-tighter">7 Confirmed</p></div>
+                    <div><p class="text-[10px] text-slate-500 uppercase tracking-widest">Objective</p><p id="brief-objective" class="text-[10px] text-slate-400 italic">"Intercept hostiles."</p></div>
                 </div>
                 <button id="return-map-btn" class="mt-6 w-full py-2 border border-slate-700 rounded text-[10px] uppercase font-bold hover:bg-slate-800 font-mono">Return to Map</button>
             </div>
             <div class="md:col-span-2 space-y-4 text-center md:text-left font-mono">
-                <h2 class="text-slate-300 font-bold uppercase text-sm mb-2 uppercase tracking-widest font-mono">Select Asset</h2>
-                <div id="sub-selection-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono"></div>
+                <h2 class="text-slate-300 font-bold uppercase text-sm mb-2 uppercase tracking-widest">Select Submersible</h2>
+                <div id="sub-selection-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
             </div>
         </div>
     </div>
 
     <!-- Screen 4: Tactical Interface -->
     <div id="game-screen" class="hidden max-w-6xl w-full py-6 px-4 font-mono">
-        <div class="mb-4 max-w-3xl mx-auto font-mono">
-            <div class="flex justify-between items-end border-b border-slate-700 pb-2 font-mono">
-                <div><h1 id="sub-name-display" class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter font-mono">Nautilus</h1><p id="mode-tag-display" class="text-[10px] text-slate-400 font-bold tracking-widest uppercase italic font-mono">DEPLOYED</p></div>
+        <div class="mb-4 max-w-3xl mx-auto">
+            <div class="flex justify-between items-end border-b border-slate-700 pb-2">
+                <div><h1 id="sub-name-display" class="text-2xl font-bold text-emerald-500 uppercase tracking-tighter">Nautilus</h1><p id="mode-tag-display" class="text-[10px] text-slate-400 font-bold tracking-widest uppercase italic">DEPLOYED</p></div>
                 <div class="text-right">
                     <div class="text-xl font-bold flex items-center justify-end gap-2 font-mono"><span id="shots-count">30</span><svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></div>
-                    <div class="text-[10px] uppercase text-slate-500 tracking-widest font-bold font-mono">Ammunition</div>
+                    <div class="text-[10px] uppercase text-slate-500 tracking-widest font-bold">Ammunition</div>
                 </div>
             </div>
-            <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800 font-mono"></div>
+            <div id="fleet-dashboard" class="flex flex-wrap gap-3 mt-3 bg-slate-900/50 p-3 rounded border border-slate-800"></div>
             <div id="merchant-status-panel" class="hidden mt-3 bg-slate-800 p-2 rounded border border-white/20 flex items-center justify-between font-mono">
-                <div class="flex items-center gap-2 font-mono"><span class="text-xl">🚢</span><span class="text-[10px] font-bold uppercase tracking-widest font-mono">Freight Integrity</span></div>
-                <div class="flex-1 mx-4 bg-slate-900 h-3 rounded-full border border-slate-700 overflow-hidden font-mono"><div id="merchant-health-bar" class="h-full bg-emerald-500 transition-all duration-500 font-mono" style="width: 100%"></div></div>
-                <div id="merchant-health-text" class="text-xs font-bold font-mono font-mono">5/5</div>
+                <div class="flex items-center gap-2"><span class="text-xl">🚢</span><span class="text-[10px] font-bold uppercase tracking-widest">Freight Integrity</span></div>
+                <div class="flex-1 mx-4 bg-slate-900 h-3 rounded-full border border-slate-700 overflow-hidden"><div id="merchant-health-bar" class="h-full bg-emerald-500 transition-all duration-500" style="width: 100%"></div></div>
+                <div id="merchant-health-text" class="text-xs font-bold font-mono">5/5</div>
             </div>
             <div class="grid grid-cols-7 gap-2 mt-3 font-mono">
-                <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2 font-mono">
-                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter uppercase font-mono font-mono">Condition</div>
-                    <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase font-mono font-mono">Clear Skies</div>
-                    <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight font-mono font-mono">Forecast: Loading...</div>
+                <div class="weather-card p-2 rounded border border-slate-700 flex flex-col justify-center col-span-2">
+                    <div class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter uppercase font-mono">Condition</div>
+                    <div id="weather-text" class="text-xs font-bold text-blue-400 uppercase font-mono">Clear Skies</div>
+                    <div id="next-weather" class="text-[9px] font-bold text-slate-500 uppercase mt-1 tracking-tight">Forecast: Loading...</div>
                 </div>
                 <button id="sonar-btn" onclick="activateSonar()" class="bg-emerald-900/50 hover:bg-emerald-800 p-2 rounded border border-emerald-700 transition-all disabled:opacity-30 col-span-1 font-mono">
-                    <div class="text-[10px] text-emerald-300 uppercase font-mono">Sonar</div>
-                    <div id="sonar-count" class="text-lg font-bold text-emerald-400 font-mono font-mono">3</div>
+                    <div class="text-[10px] text-emerald-300 uppercase">Sonar</div>
+                    <div id="sonar-count" class="text-lg font-bold text-emerald-400 font-mono">3</div>
                 </button>
                 <button id="torpedo-btn" onclick="activateTorpedo()" class="bg-amber-900/50 hover:bg-amber-800 p-2 rounded border border-amber-700 transition-all col-span-1 font-mono">
-                    <div class="text-[10px] text-amber-300 uppercase font-mono">Torp</div>
-                    <div id="torpedo-count" class="text-lg font-bold text-amber-400 font-mono font-mono">2</div>
+                    <div class="text-[10px] text-amber-300 uppercase">Torp</div>
+                    <div id="torpedo-count" class="text-lg font-bold text-amber-400 font-mono">2</div>
                 </button>
                 <button id="buster-btn" onclick="activateBuster()" class="bg-red-900/30 hover:bg-red-900/50 p-2 rounded border border-red-900 transition-all col-span-1 disabled:opacity-20 font-mono">
-                    <div class="text-[10px] text-red-400 uppercase font-mono font-mono">Buster</div>
-                    <div id="buster-count" class="text-lg font-bold text-red-500 font-mono font-mono">0</div>
+                    <div class="text-[10px] text-red-400 uppercase">Buster</div>
+                    <div id="buster-count" class="text-lg font-bold text-red-500 font-mono">0</div>
                 </button>
                 <button id="advance-btn" onclick="signalAdvanceTurn()" class="hidden bg-slate-700 hover:bg-slate-600 p-2 rounded border border-white/20 transition-all col-span-1 font-mono">
-                    <div class="text-[10px] text-slate-300 uppercase font-mono">Signal</div>
-                    <div class="text-xs font-bold text-white uppercase font-mono font-mono">Advance</div>
+                    <div class="text-[10px] text-slate-300 uppercase">Signal</div>
+                    <div class="text-xs font-bold text-white uppercase font-mono">Advance</div>
                 </button>
-                <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1 font-mono">
-                    <div><div class="text-[10px] text-slate-400 uppercase font-bold font-mono font-mono font-mono">Hull Hits</div><div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter font-mono font-mono">0/0</div></div>
-                    <div><div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase tracking-tighter font-mono font-mono">Ready</div></div>
+                <div class="bg-slate-800 p-2 rounded border border-slate-700 flex flex-col justify-between col-span-1">
+                    <div><div class="text-[10px] text-slate-400 uppercase font-bold font-mono">Hull Hits</div><div id="fleet-count" class="text-xs font-bold text-red-400 tracking-tighter">0/0</div></div>
+                    <div><div id="status-text" class="text-[9px] font-bold text-emerald-500 uppercase tracking-tighter font-mono">Ready</div></div>
                 </div>
             </div>
         </div>
         <div class="flex flex-col lg:flex-row items-start justify-center gap-6 font-mono">
-            <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden font-mono">
-                <div class="radar-sweep font-mono"></div>
-                <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900 font-mono" style="width: min(95vw, 600px);"></div>
-                <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm font-mono">
+            <div class="relative p-1 bg-slate-800 rounded shadow-2xl border border-slate-700 overflow-hidden">
+                <div class="radar-sweep"></div>
+                <div id="game-grid" class="gap-px bg-slate-900 border border-slate-900" style="width: min(95vw, 600px);"></div>
+                <div id="dir-selector" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
                     <div class="bg-slate-800 p-4 rounded-lg border border-amber-500 shadow-2xl text-center font-mono">
                         <p id="target-vector-text" class="text-amber-500 font-bold mb-4 uppercase text-sm font-mono">Target Vector</p>
-                        <div class="grid grid-cols-3 gap-2 font-mono">
-                            <div></div><button id="btn-up" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">▲</button><div></div>
-                            <button id="btn-left" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">◀</button>
-                            <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs font-mono font-bold font-mono">X</button>
-                            <button id="btn-right" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">▶</button>
-                            <div></div><button id="btn-down" class="p-3 bg-slate-700 hover:bg-amber-600 rounded font-mono">▼</button><div></div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div></div><button id="btn-up" onclick="fireTorpedoActual('up')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▲</button><div></div>
+                            <button id="btn-left" onclick="fireTorpedoActual('left')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">◀</button>
+                            <button onclick="cancelWeapon()" class="p-3 bg-red-900/50 hover:bg-red-600 rounded text-xs font-mono font-bold">X</button>
+                            <button id="btn-right" onclick="fireTorpedoActual('right')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▶</button>
+                            <div></div><button id="btn-down" onclick="fireTorpedoActual('down')" class="p-3 bg-slate-700 hover:bg-amber-600 rounded">▼</button><div></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-full lg:w-80 h-[300px] lg:h-[608px] bg-slate-900/80 border border-slate-700 rounded-lg flex flex-col shadow-2xl font-mono">
-                <div class="p-3 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center text-center font-mono"><h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 font-mono font-mono font-mono"><span class="w-2 h-2 bg-red-500 rounded-full animate-pulse font-mono font-mono font-mono"></span>Telemetry Feed</h2></div>
+                <div class="p-3 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center text-center font-mono font-mono"><h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 font-mono"><span class="w-2 h-2 bg-red-500 rounded-full animate-pulse font-mono"></span>Telemetry Feed</h2></div>
                 <div id="battle-log" class="flex-1 overflow-y-auto p-4 space-y-3 font-mono"></div>
             </div>
         </div>
-        <div class="mt-8 flex flex-col items-center gap-4 font-mono"><button onclick="abortMatch()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30 italic font-mono">Abort Survey</button></div>
+        <div class="mt-8 flex flex-col items-center gap-4 font-mono font-mono"><button onclick="abortMatch()" class="btn-abort text-[10px] px-8 py-2 rounded font-bold text-red-400 uppercase tracking-widest border border-red-900/30 italic">Abort Operation</button></div>
     </div>
 
-    <div id="overlay" class="hidden fixed inset-0 bg-slate-900/95 flex flex-col items-center justify-center z-[100] p-6 text-center font-mono">
-        <h2 id="overlay-title" class="text-6xl font-black mb-4 tracking-tighter uppercase font-mono">DEFEAT</h2>
+    <div id="overlay" class="hidden fixed inset-0 bg-slate-900/95 flex flex-col items-center justify-center z-[100] p-6 text-center font-mono font-mono">
+        <h2 id="overlay-title" class="text-6xl font-black mb-4 tracking-tighter uppercase font-mono font-mono">FAILED</h2>
         <p id="overlay-msg" class="text-xl text-slate-400 mb-8 max-w-md italic font-mono"></p>
         <div class="flex gap-4 font-mono">
-            <button id="end-action-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-12 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-900/20 uppercase tracking-widest italic font-mono">Main Menu</button>
-            <button id="secondary-action-btn" class="hidden bg-red-900/50 hover:bg-red-800 text-red-200 font-bold py-4 px-12 rounded-full transition-all border border-red-700 uppercase tracking-widest italic font-mono">Abandon</button>
+            <button id="end-action-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-12 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-900/20 uppercase tracking-widest italic font-mono">Action</button>
+            <button id="secondary-action-btn" class="hidden bg-red-900/50 hover:bg-red-800 text-red-200 font-bold py-4 px-12 rounded-full transition-all border border-red-700 uppercase tracking-widest italic font-mono font-mono">Secondary</button>
         </div>
     </div>
 
     <script>
-        // --- UTILITIES ---
+        // --- HOISTED UTILITIES ---
         function getNumberColor(n) { return ['', '#60a5fa', '#4ade80', '#fbbf24', '#f87171', '#c084fc', '#2dd4bf', '#f472b6', '#ffffff'][n] || '#fff'; }
         
         function showScreen(screenId) {
@@ -398,7 +396,7 @@
                 const target = e.target.closest('.keyword');
                 if (target) { const text = target.innerText.toUpperCase(); if (TOOLTIPS[text]) { t.innerText = TOOLTIPS[text]; t.style.display = 'block'; } }
                 const tile = e.target.closest('.map-tile');
-                if(tile && tile.dataset.hint) { t.innerText = "ARCANE ECHO: " + tile.dataset.hint; t.style.display = 'block'; }
+                if(tile && tile.dataset.hint) { t.innerText = "SIGNAL TRACE: " + tile.dataset.hint; t.style.display = 'block'; }
             });
             document.addEventListener('mousemove', e => { if (t.style.display === 'block') { t.style.left = (e.clientX + 15) + 'px'; t.style.top = (e.clientY + 15) + 'px'; } });
             document.addEventListener('mouseout', e => { if (e.target.closest('.keyword') || e.target.closest('.map-tile')) t.style.display = 'none'; });
@@ -406,15 +404,14 @@
 
         function generateRiftHint() {
             const type = Math.random();
-            if (type < 0.3) {
-                const vert = riftPos.r > playerPos.r ? "South" : (riftPos.r < playerPos.r ? "North" : "same latitude");
-                return `Rift detected ${vert} of this position.`;
-            } else if (type < 0.6) {
-                const horiz = riftPos.c > playerPos.c ? "East" : (riftPos.c < playerPos.c ? "West" : "same longitude");
-                return `Arcane pings suggest the Rift lies to the ${horiz}.`;
+            const d = Math.abs(riftPos.r - playerPos.r) + Math.abs(riftPos.c - playerPos.c);
+            if (d < 2) return `Proximity warning: Critical signal saturation at source. Geometry is... wrong.`;
+            if (type < 0.5) {
+                const vert = riftPos.r > playerPos.r ? "South" : (riftPos.r < playerPos.r ? "North" : "latitude sync");
+                return `Anomalous pings detected ${vert} of current sector.`;
             } else {
-                const d = Math.abs(riftPos.r - playerPos.r) + Math.abs(riftPos.c - playerPos.c);
-                return `Rift approx. ${d} sectors away.`;
+                const horiz = riftPos.c > playerPos.c ? "East" : (riftPos.c < playerPos.c ? "West" : "longitude sync");
+                return `Signature source tracking to the ${horiz}.`;
             }
         }
 
@@ -422,46 +419,44 @@
         const GRID_SIZE = 15;
         const BASE_FLEET = [5, 4, 4, 3, 3, 2, 2];
         const BOSS_FLEET = [5, 3, 3, 3, 2, 2, 2];
+        const BOSS_CORE_SHAPE = [[0,0], [1,0], [-1,0], [0,1], [0,-1], [1,1], [-1,-1], [1,-1]]; 
         const WEATHER_TYPES = ['Clear Skies', 'Dense Fog', 'Electrical Storm', 'Rough Seas'];
         const UPGRADES = [
-            { id: 'ammo_1', name: 'Ammo I', desc: 'Starting ammo +5', bonus: { shots: 5 }, req: null },
-            { id: 'ammo_2', name: 'Ammo II', desc: 'Starting ammo +10', bonus: { shots: 10 }, req: 'ammo_1' },
-            { id: 'torp_1', name: 'Firepower I', desc: 'Starting torpedoes +1', bonus: { torps: 1 }, req: null },
-            { id: 'torp_2', name: 'Firepower II', desc: 'Starting torpedoes +2', bonus: { torps: 2 }, req: 'torp_1' },
-            { id: 'sonar_1', name: 'Knowledge I', desc: 'Starting sonar +1', bonus: { sonar: 1 }, req: null },
-            { id: 'sonar_2', name: 'Knowledge II', desc: 'Starting sonar +2', bonus: { sonar: 2 }, req: 'sonar_1' },
-            { id: 'buster_1', name: 'Buster I', desc: 'Torpedoes cost 1 ammo', bonus: { torpCost: 1 }, req: null },
-            { id: 'buster_2', name: 'Buster II', desc: 'Torpedoes cost 0 ammo', bonus: { torpCost: 0 }, req: 'buster_1' },
-            { id: 'eff_1', name: 'Efficient I', desc: 'Hits recharge 1 ammo', bonus: { hitRefund: 1 }, req: null },
-            { id: 'eff_2', name: 'Efficient II', desc: 'Hits recharge 2 ammo', bonus: { hitRefund: 2 }, req: 'eff_1' },
+            { id: 'ammo_1', name: 'Battery I', desc: 'Starting ammo +5', bonus: { shots: 5 }, req: null },
+            { id: 'ammo_2', name: 'Battery II', desc: 'Starting ammo +10', bonus: { shots: 10 }, req: 'ammo_1' },
+            { id: 'torp_1', name: 'Payload I', desc: 'Starting torpedoes +1', bonus: { torps: 1 }, req: null },
+            { id: 'torp_2', name: 'Payload II', desc: 'Starting torpedoes +2', bonus: { torps: 2 }, req: 'torp_1' },
+            { id: 'sonar_1', name: 'Acoustic I', desc: 'Starting sonar +1', bonus: { sonar: 1 }, req: null },
+            { id: 'sonar_2', name: 'Acoustic II', desc: 'Starting sonar +2', bonus: { sonar: 2 }, req: 'sonar_1' },
+            { id: 'buster_1', name: 'Capacitor I', desc: 'Torpedoes cost 1 ammo', bonus: { torpCost: 1 }, req: null },
+            { id: 'buster_2', name: 'Capacitor II', desc: 'Torpedoes cost 0 ammo', bonus: { torpCost: 0 }, req: 'buster_1' },
+            { id: 'eff_1', name: 'Cycle I', desc: 'Hits recharge 1 ammo', bonus: { hitRefund: 1 }, req: null },
+            { id: 'eff_2', name: 'Cycle II', desc: 'Hits recharge 2 ammo', bonus: { hitRefund: 2 }, req: 'eff_1' },
             { id: 'drone_1', name: 'Drones I', desc: 'Sonar scans 4x4 area', bonus: { sonarSize: 4 }, req: null },
-            { id: 'drone_2', name: 'Drones II', desc: 'Sonar strikes scanned ships', bonus: { sonarAggressive: true }, req: 'drone_1' },
-            { id: 'intercept_1', name: 'Intercept I', desc: 'Radar Vessels reveal 2 tiles', bonus: { intelBonus: 2 }, req: null },
-            { id: 'intercept_2', name: 'Intercept II', desc: 'Radar Vessels reveal 3 tiles', bonus: { intelBonus: 3 }, req: 'intercept_1' }
+            { id: 'drone_2', name: 'Drones II', desc: 'Sonar strikes signatures', bonus: { sonarAggressive: true }, req: 'drone_1' },
+            { id: 'intercept_1', name: 'Radio I', desc: 'Radar Vessels reveal 2 water', bonus: { intelBonus: 2 }, req: null },
+            { id: 'intercept_2', name: 'Radio II', desc: 'Radar Vessels reveal 3 water', bonus: { intelBonus: 3 }, req: 'intercept_1' }
         ];
         const ALIEN_SHAPES = {
             2: [[[0,0], [1,0]], [[0,0], [0,1]]],
             3: [ [[0,0], [0,1], [1,0]], [[0,0], [0,1], [-1,0]], [[0,0], [1,0], [1,1]], [[0,0], [0,-1], [1,0]] ],
             4: [ [[0,0], [0,1], [1,1], [1,2]], [[0,0], [0,1], [0,2], [1,1]], [[0,0], [0,1], [1,0], [1,1]], [[0,0], [1,0], [2,0], [2,1]] ],
-            5: [ [[0,0], [0,1], [0,2], [1,0], [2,0]], [[0,0], [1,0], [2,0], [1,1], [1,2]], [[0,0], [0,1], [1,1], [2,1], [2,0]] ]
+            5: [ [[0,0], [0,1], [0,2], [1,0], [2,0]], [[0,0], [1,0], [2,0], [1,1], [1,2]], [[0,0], [0,1], [1,1], [2,1], [2,0]] ],
+            6: [ [[0,0], [0,1], [0,2], [0,3], [1,1], [1,2]] ]
         };
-        const BOSS_CORE_SHAPE = [[0,0], [1,0], [-1,0], [0,1], [0,-1]]; 
         const TOOLTIPS = {
-            'ELECTRICAL STORM': 'Sonar Jamming active. Knowledge tools disabled (unless using Ghost-6).',
-            'ROUGH SEAS': 'Turbulent waters detected. Torpedo range reduced to 5 slots.',
-            'DENSE FOG': 'Visibility critical. Ship proximity data obscured (Reveals \'?\' instead of counts).',
-            'CLEAR SKIES': 'Optimal operating conditions. All systems functioning at peak efficiency.',
-            'ARCANE STORM': 'Phasing anomaly. Conditions alternate between Sonar Jamming and Range Limitation.',
-            'UNSTABLE PHASING': 'The Rift cycles conditions every 8 turns.',
-            'REGENERATIVE': 'Hostile entity can heal partially damaged components if not fully neutralized quickly.'
+            'ELECTRICAL STORM': 'Sensor Jamming active. Knowledge tools disabled.',
+            'ROUGH SEAS': 'Turbulent waters. Torpedo range reduced to 5 slots.',
+            'DENSE FOG': 'Visual saturation. Proximity data obscured (Reveals \'?\').',
+            'CLEAR SKIES': 'Optimal visibility and sensor range.',
+            'ARCANE STORM': 'Reality phasing. Alternates conditions every turn.',
+            'UNSTABLE PHASING': 'Signature source cycling every 8 turns.',
+            'REGENERATIVE': 'Biological signal can heal damaged nodes.'
         };
 
-        // --- SOUND ENGINE ---
+        // --- SOUND ENGINE (SFX ONLY) ---
         const Sound = (function() {
             let ctx = null, noiseBuffer = null;
-            let bgmNodes = { drone: null, tension: null, melody: null, dGain: null, tGain: null, mGain: null, filter: null };
-            let musicStarted = false;
-            let musicInterval = null;
 
             function init() { 
                 if(!ctx) {
@@ -473,59 +468,6 @@
                 if(ctx.state === 'suspended') ctx.resume();
             }
 
-            function startMusic() {
-                if (!ctx) init();
-                if (musicStarted) return;
-                musicStarted = true;
-
-                const drone = ctx.createOscillator(), dGain = ctx.createGain();
-                drone.type = 'sine'; drone.frequency.value = 40; dGain.gain.value = 0.1;
-                drone.connect(dGain); dGain.connect(ctx.destination);
-                drone.start(); bgmNodes.drone = drone; bgmNodes.dGain = dGain;
-
-                const tension = ctx.createOscillator(), tGain = ctx.createGain(), filter = ctx.createBiquadFilter();
-                tension.type = 'sawtooth'; tension.frequency.value = 60;
-                filter.type = 'lowpass'; filter.frequency.value = 200;
-                tGain.gain.value = 0;
-                tension.connect(filter); filter.connect(tGain); tGain.connect(ctx.destination);
-                tension.start(); bgmNodes.tension = tension; bgmNodes.tGain = tGain; bgmNodes.filter = filter;
-
-                const mGain = ctx.createGain(); mGain.gain.value = 0.05; mGain.connect(ctx.destination);
-                bgmNodes.mGain = mGain;
-
-                const notesEarly = [261.63, 329.63, 392.00, 440.00], notesLate = [130.81, 155.56, 185.00, 196.00, 233.08];
-                musicInterval = setInterval(() => {
-                    if (gameActive && ctx) {
-                        const d = playerPos.r + playerPos.c, intensity = isBoss ? 1.0 : d / 8;
-                        const list = intensity > 0.5 ? notesLate : notesEarly;
-                        const freq = list[Math.floor(Math.random() * list.length)];
-                        const osc = ctx.createOscillator(), env = ctx.createGain();
-                        osc.type = intensity > 0.7 ? 'square' : 'sine';
-                        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                        env.gain.setValueAtTime(0, ctx.currentTime);
-                        env.gain.linearRampToValueAtTime(0.05 + (intensity * 0.05), ctx.currentTime + 0.1);
-                        env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5 - (intensity * 0.5));
-                        osc.connect(env); env.connect(bgmNodes.mGain);
-                        osc.start(); osc.stop(ctx.currentTime + 1.5);
-                    }
-                }, 1800);
-            }
-
-            function stopMusic() {
-                if (bgmNodes.drone) { try { bgmNodes.drone.stop(); } catch(e) {} bgmNodes.drone = null; }
-                if (bgmNodes.tension) { try { bgmNodes.tension.stop(); } catch(e) {} bgmNodes.tension = null; }
-                if (musicInterval) { clearInterval(musicInterval); musicInterval = null; }
-                musicStarted = false;
-            }
-
-            function setIntensity(level) { 
-                if (!ctx || !bgmNodes.drone || !bgmNodes.filter || !bgmNodes.tGain) return;
-                const now = ctx.currentTime;
-                bgmNodes.tGain.gain.linearRampToValueAtTime(level * 0.1, now + 3);
-                bgmNodes.filter.frequency.linearRampToValueAtTime(100 + (level * 500), now + 3);
-                bgmNodes.drone.frequency.linearRampToValueAtTime(40 - (level * 10), now + 3);
-            }
-
             function play(freq, type, duration, vol = 0.1) {
                 if(!ctx) init(); const osc = ctx.createOscillator(), gain = ctx.createGain();
                 osc.type = type; osc.frequency.setValueAtTime(freq, ctx.currentTime);
@@ -535,7 +477,7 @@
                 osc.start(); osc.stop(ctx.currentTime + duration);
             }
 
-            return { init, startMusic, stopMusic, setIntensity, play,
+            return { init, play,
                 ui: () => play(600, 'sine', 0.1), ping: () => play(900, 'sine', 0.4, 0.05),
                 launch: () => play(150, 'sawtooth', 0.5, 0.1),
                 hit: () => {
@@ -544,19 +486,18 @@
                     thump.frequency.setValueAtTime(150, ctx.currentTime); thump.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.5);
                     tG.gain.setValueAtTime(0.4, ctx.currentTime); tG.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
                     thump.connect(tG); tG.connect(ctx.destination); thump.start(); thump.stop(ctx.currentTime + 0.6);
-                    const n = ctx.createBufferSource(), nG = ctx.createGain(); n.buffer = noiseBuffer;
-                    nG.gain.setValueAtTime(0.3, ctx.currentTime); nG.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
-                    n.connect(nG); nG.connect(ctx.destination); n.start(); n.stop(ctx.currentTime + 0.2);
                 },
                 hitAlien: () => {
                     if(!ctx) init();
-                    const osc = ctx.createOscillator(), g = ctx.createGain();
-                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.4);
-                    g.gain.setValueAtTime(0.3, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-                    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 10;
-                    f.frequency.setValueAtTime(400, ctx.currentTime);
-                    osc.connect(f); f.connect(g); g.connect(ctx.destination);
+                    const osc = ctx.createOscillator(), gain = ctx.createGain(), filter = ctx.createBiquadFilter();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(3000, ctx.currentTime + 0.1);
+                    osc.frequency.exponentialRampToValueAtTime(1500, ctx.currentTime + 0.4);
+                    filter.type = 'highpass'; filter.frequency.value = 1000;
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                    osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
                     osc.start(); osc.stop(ctx.currentTime + 0.4);
                 },
                 miss: () => play(100, 'sine', 0.3, 0.05),
@@ -577,7 +518,7 @@
         let selectedSub = 'Nautilus', currentMissionPos = null, isEscort = false, isBoss = false;
         let merchantPos = {r: 14, c: 14}, merchantHealth = 5, merchantMaxHealth = 5, merchantPath = [];
 
-        // --- TURN LOGIC (CENTRALIZED) ---
+        // --- TURN LOGIC ---
         function advanceTurn() {
             if (!gameActive) return;
             weatherCounter--;
@@ -598,7 +539,7 @@
         }
 
         function changeWeather() { currentWeather = nextWeather; nextWeather = WEATHER_TYPES[Math.floor(Math.random() * (WEATHER_TYPES.length - 1))]; weatherCounter = 10; isGlobalFog = (currentWeather === 'Dense Fog'); Sound.alert(); logEvent(`Shift: ${currentWeather.toUpperCase()}.`, 'info'); renderWeatherEffects(); }
-        function toggleBossWeather() { weatherCounter = 8; currentWeather = (currentWeather === 'Electrical Storm') ? 'Rough Seas' : 'Electrical Storm'; logEvent(`RIFT PHASING: ${currentWeather.toUpperCase()}.`, 'info'); Sound.alert(); renderWeatherEffects(); }
+        function toggleBossWeather() { weatherCounter = 8; currentWeather = (currentWeather === 'Electrical Storm') ? 'Rough Seas' : 'Electrical Storm'; logEvent(`PHASE SHIFT: ${currentWeather.toUpperCase()}.`, 'info'); Sound.alert(); renderWeatherEffects(); }
 
         function renderWeatherEffects() {
             document.querySelectorAll('.fog-overlay').forEach(el => el.remove());
@@ -607,7 +548,7 @@
             }
             for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) { 
                 const d = grid[r][c]; 
-                if (d.revealed && !d.isShip) { 
+                if (d && d.revealed && !d.isShip) { 
                     const el = document.getElementById(`cell-${r}-${c}`); 
                     if (el && d.neighborShips > 0) { 
                         const iO = isGlobalFog && selectedSub !== 'Ghost-6'; 
@@ -620,7 +561,7 @@
 
         // --- CORE FUNCTIONS ---
         function initCampaign() {
-            Sound.init(); Sound.startMusic();
+            Sound.init();
             gameMode = 'campaign'; playerUpgrades = []; salvagedAmmo = 0; playerPos = {r: 0, c: 0}; riftHints = [];
             mapData = Array(5).fill().map(() => Array(5).fill().map(() => ({ status: 'locked', hint: null })));
             mapMissionTypes = Array(5).fill().map((_, r) => Array(5).fill().map((_, c) => (r+c > 2 && Math.random() < 0.4 ? 'ESC' : 'BTL')));
@@ -631,13 +572,11 @@
             showScreen('overworld');
         }
 
-        function initArcade() { Sound.init(); Sound.startMusic(); gameMode = 'arcade'; playerUpgrades = []; salvagedAmmo = 0; isEscort = false; isBoss = false; showBriefing(1, 1); }
-
-        function mainMenu() { document.getElementById('overlay').classList.add('hidden'); Sound.stopMusic(); showScreen('title'); }
+        function initArcade() { Sound.init(); gameMode = 'arcade'; playerUpgrades = []; salvagedAmmo = 0; isEscort = false; isBoss = false; showBriefing(1, 1); }
+        function mainMenu() { document.getElementById('overlay').classList.add('hidden'); showScreen('title'); }
 
         function renderOverworld() {
             const container = document.getElementById('overworld-grid'); container.innerHTML = '';
-            const dTotal = playerPos.r + playerPos.c; Sound.setIntensity(isBoss ? 1.0 : dTotal / 8); 
             for(let r=0; r<5; r++) for(let c=0; c<5; c++) {
                 const cell = mapData[r][c];
                 if (!['current', 'visited'].includes(cell.status) && isAdjacentToVisited(r, c)) if (cell.status === 'locked') cell.status = 'mission';
@@ -647,12 +586,12 @@
                 if (r === 0 && c === 0 && (currentStatus === 'current' || currentStatus === 'visited')) tile.innerHTML = '<span class="text-[10px] font-black text-emerald-400 uppercase">HQ</span>';
                 else if (currentStatus === 'locked') tile.innerHTML = '<span class="text-xl font-bold opacity-20">?</span>';
                 else if (currentStatus === 'mission') {
-                    const label = mType === 'ESC' ? 'ESCORT' : (mType === 'RIFT' ? 'THE RIFT' : 'BATTLE'), colorClass = mType === 'RIFT' ? 'text-purple-400 animate-pulse' : 'text-amber-500';
-                    tile.innerHTML = `<span class="text-[9px] font-bold ${colorClass}">${label}</span><span class="text-[7px] opacity-50 uppercase font-bold tracking-tighter">Dist ${r+c}</span>`;
+                    const label = mType === 'ESC' ? 'ESCORT' : (mType === 'RIFT' ? 'ANOMALY' : 'Skirmish'), colorClass = mType === 'RIFT' ? 'text-purple-400 animate-pulse' : 'text-amber-500';
+                    tile.innerHTML = `<span class="text-[9px] font-bold ${colorClass}">${label}</span><span class="text-[7px] opacity-50 uppercase font-mono">DIST ${r+c}</span>`;
                     tile.onclick = () => { Sound.ui(); showBriefing(r, c); };
                 } else if (currentStatus === 'current') tile.innerHTML = '<span class="text-sm">⚓</span>';
                 else if (currentStatus === 'visited') {
-                    tile.innerHTML = '<span class="text-[8px] text-slate-600 uppercase font-bold">Clear</span>';
+                    tile.innerHTML = '<span class="text-[8px] text-slate-600 font-bold uppercase">SECURED</span>';
                     if (cell.hint) { tile.innerHTML += '<div class="absolute top-1 right-1 text-[8px]">👁️</div>'; tile.dataset.hint = cell.hint; }
                 }
                 container.appendChild(tile);
@@ -663,11 +602,13 @@
 
         // --- BATTLE ACTIONS ---
         function showBriefing(r, c) {
-            currentMissionPos = {r, c}; const dist = r + c;
+            currentMissionPos = {r, c};
+            const distToRift = Math.abs(r - riftPos.r) + Math.abs(c - riftPos.c);
             isEscort = (gameMode === 'campaign' && mapMissionTypes[r][c] === 'ESC');
             isBoss = (gameMode === 'campaign' && mapMissionTypes[r][c] === 'RIFT');
-            document.getElementById('brief-title').innerText = isBoss ? "The Abyssal Rift" : (isEscort ? "Escort Protocol" : "Sector Neutralization");
-            document.getElementById('mission-coord-display').innerText = gameMode === 'arcade' ? 'Standard Simulation' : `Sector [${r+1}-${c+1}]`;
+            
+            document.getElementById('brief-title').innerText = isBoss ? "Operational Source" : (isEscort ? "Merchant Protection" : "Sector Investigation");
+            document.getElementById('mission-coord-display').innerText = gameMode === 'arcade' ? 'Standard Tactical Simulation' : `Grid Reference [${r+1}-${c+1}]`;
             
             const backBtn = document.getElementById('return-map-btn');
             if (gameMode === 'arcade') {
@@ -678,25 +619,29 @@
                 backBtn.onclick = () => showScreen('overworld');
             }
 
-            if (isBoss) { currentShipTypes = [...BOSS_FLEET]; document.getElementById('brief-objective').innerText = "Anomalous entity detected. Terminate the Elder Core."; } 
-            else {
-                const extra = Math.floor(dist / 3); currentShipTypes = [...BASE_FLEET]; for(let i=0; i<extra; i++) currentShipTypes.push(2);
-                document.getElementById('brief-objective').innerText = isEscort ? "Protect freighter. Neutralize path hostiles." : "Locate and destroy all hostiles.";
+            if (isBoss) { 
+                currentShipTypes = [...BOSS_FLEET]; 
+                document.getElementById('brief-objective').innerText = "Signal Source localized. Massive frame confirmed. Core shielding active."; 
+            } else {
+                const scaleBonus = (distToRift <= 2 && gameMode === 'campaign') ? 1 : 0;
+                currentShipTypes = BASE_FLEET.map(s => s + scaleBonus);
+                document.getElementById('brief-objective').innerText = isEscort ? "Protect transport vessel. Investigate naval signatures." : "Neutralize all unidentified signatures.";
             }
+            
             totalShipSegments = currentShipTypes.reduce((a, b) => a + b, 0);
             const wName = isBoss ? 'ARCANE STORM' : WEATHER_TYPES[Math.floor(Math.random() * (WEATHER_TYPES.length - 1))];
-            document.getElementById('brief-weather').innerHTML = `<span class="keyword font-mono">${wName}</span>`;
-            document.getElementById('brief-fleet').innerText = isBoss ? "ELDER ENTITY" : `${currentShipTypes.length} Signatures Detected`;
+            document.getElementById('brief-weather').innerHTML = `<span class="keyword">${wName}</span>`;
+            document.getElementById('brief-fleet').innerText = `${currentShipTypes.length} Active Signatures`;
             renderSubSelection(); showScreen('deployment');
         }
 
         function renderSubSelection() {
             const container = document.getElementById('sub-selection-container'); container.innerHTML = '';
             const subs = [ 
-                { id: 'Nautilus', ammo: 35, sonar: 5, torp: 1, color: 'emerald', tag: 'INTEL', perk: 'Advanced scouting array. Superior starting resources.' }, 
-                { id: 'The Kraken', ammo: 25, sonar: 2, torp: 5, color: 'amber', tag: 'OFFENSE', perk: 'Heavy battery focus. Expanded torpedo payload.' }, 
-                { id: 'Ghost-6', ammo: 30, sonar: 3, torp: 2, color: 'indigo', tag: 'STEALTH', perk: 'E-War shielding. Immune to Storm jamming and Fog blur.' }, 
-                { id: 'The Scavenger', ammo: 20, sonar: 2, torp: 2, color: 'rose', tag: 'SALVAGE', perk: 'Salvage optimizer. Double ammo/weapon recovery.' } 
+                { id: 'Nautilus', ammo: 35, sonar: 5, torp: 1, color: 'emerald', tag: 'INTEL', perk: 'Advanced scouting array. High resource capacity.' }, 
+                { id: 'The Kraken', ammo: 25, sonar: 2, torp: 5, color: 'amber', tag: 'OFFENSE', perk: 'Heavy battery focus. High torpedo payload.' }, 
+                { id: 'Ghost-6', ammo: 30, sonar: 3, torp: 2, color: 'indigo', tag: 'STEALTH', perk: 'Shielded sensors. Immune to weather jamming.' }, 
+                { id: 'The Scavenger', ammo: 20, sonar: 2, torp: 2, color: 'rose', tag: 'SCRAP', perk: 'Optimized salvage. Double recovery from sinks.' } 
             ];
             const bA = playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.shots || 0), 0);
             const bS = playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.sonar || 0), 0);
@@ -705,7 +650,7 @@
                 const card = document.createElement('div'); card.onclick = () => { Sound.ui(); selectedSub = sub.id; startMission(); };
                 card.className = 'sub-card p-4 rounded-lg bg-slate-800/50 flex flex-col justify-between h-full font-mono';
                 card.innerHTML = `
-                    <div><div class="flex justify-between items-start mb-2"><h3 class="text-${sub.color}-400 font-bold uppercase text-xs">${sub.id}</h3><span class="text-[8px] bg-${sub.color}-900/50 text-${sub.color}-300 px-1 rounded uppercase font-bold tracking-widest">${sub.tag}</span></div><p class="text-[9px] text-slate-400 mb-3 italic leading-snug">${sub.perk}</p></div>
+                    <div><div class="flex justify-between items-start mb-2"><h3 class="text-${sub.color}-400 font-bold uppercase text-xs font-mono">${sub.id}</h3><span class="text-[8px] bg-${sub.color}-900/50 text-${sub.color}-300 px-1 rounded uppercase font-bold tracking-widest font-mono">${sub.tag}</span></div><p class="text-[9px] text-slate-400 mb-3 italic leading-snug font-mono">${sub.perk}</p></div>
                     <div class="stat-row font-mono"><span>Ammo</span><span>${sub.ammo + bA}</span></div>
                     <div class="stat-row font-mono"><span>Sonar</span><span>${sub.sonar + bS}</span></div>
                     <div class="stat-row font-mono"><span>Torp</span><span>${sub.torp + bT}</span></div>`;
@@ -718,14 +663,13 @@
             if (isEscort) { sp.classList.remove('hidden'); ab.classList.remove('hidden'); merchantHealth = 5; merchantMaxHealth = 5; merchantPos = {r: 14, c: 14}; generateMerchantPath(); updateMerchantUI(); }
             else { sp.classList.add('hidden'); ab.classList.add('hidden'); }
             document.getElementById('battle-log').innerHTML = '';
-            logEvent(`Deployment: ${selectedSub} sub. Target: ${isBoss ? 'ELDER RIFT' : 'Sector'}.`, 'info');
+            logEvent(`Commencing Deployment: ${selectedSub} active. Tracking signatures.`, 'info');
             const subStatMap = { 'Nautilus': [35, 5, 1], 'The Kraken': [25, 2, 5], 'Ghost-6': [30, 3, 2], 'The Scavenger': [20, 2, 2] };
             const ss = subStatMap[selectedSub];
             shots = ss[0] + playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.shots || 0), 0);
             sonarCharges = ss[1] + playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.sonar || 0), 0);
             torpedoCharges = ss[2] + playerUpgrades.reduce((sum, id) => sum + (UPGRADES.find(u => u.id === id).bonus.torps || 0), 0);
             
-            // Re-initialize grid safely using loop
             grid = [];
             for (let r = 0; r < GRID_SIZE; r++) {
                 grid[r] = [];
@@ -737,7 +681,6 @@
             shipData = currentShipTypes.map((size, index) => ({ id: index, size, health: size, isSunk: false, coords: [], isAlien: false }));
             hits = 0; busterCharges = 0; weatherCounter = 10; currentWeather = isBoss ? 'Electrical Storm' : 'Clear Skies'; nextWeather = WEATHER_TYPES[Math.floor(Math.random() * (WEATHER_TYPES.length - 1))];
             isGlobalFog = false; gameActive = true; currentMode = 'shoot';
-            Sound.setIntensity(isBoss ? 1.0 : (currentMissionPos ? (currentMissionPos.r + currentMissionPos.c)/8 : 0.2));
             placeShips(); calculateNeighbors(); renderGrid(); updateUI(); if(isEscort) renderMerchant();
         }
 
@@ -748,7 +691,7 @@
                 const tsAlive = shipData.slice(1).some(s => !s.isSunk);
                 if (tsAlive) {
                     const el = document.getElementById(`cell-${r}-${c}`); el.classList.remove('cell-hidden'); el.classList.add('bg-slate-700', 'text-blue-400'); el.innerHTML = '🛡️';
-                    logEvent("Anomaly Core shielded. Sever tendrils first!", "warning"); Sound.alert(); shots--; advanceTurn(); return;
+                    logEvent("Anomaly core fully shielded. Target tendrils first!", "warning"); Sound.alert(); shots--; advanceTurn(); return;
                 }
             }
             if (currentMode === 'shoot') {
@@ -790,7 +733,7 @@
         function sinkShip(ship) {
             if (ship.isSunk) return; ship.isSunk = true; if (ship.isAlien) Sound.hitAlien(); else Sound.hit(); 
             const rem = ship.health; if (rem > 0) hits += rem; ship.health = 0; 
-            logEvent(`Target Down: ${isBoss ? (ship.id===0 ? 'CORE' : 'TENTACLE') : (['Carrier', 'Battleship', 'Battleship', 'Radar', 'Radar', 'Corvette', 'Corvette'][ship.id] || 'Vessel')}.`, 'hit');
+            logEvent(`Signature Neutralized: ${isBoss ? (ship.id===0 ? 'ANOMALY CORE' : 'TENDRIL') : (ship.isAlien ? 'ANOMALOUS ENTITY' : 'NAVAL VESSEL')}.`, 'hit');
             const mult = selectedSub === 'The Scavenger' ? 2 : 1; if (ship.size === 2) shots += (5 * mult); if (ship.size === 5) busterCharges += (1 * mult);
             ship.coords.forEach(coord => { const el = document.getElementById(`cell-${coord.r}-${coord.c}`); if(el) { el.classList.add('cell-sunk-ship'); el.innerHTML = ship.isAlien ? '🐙' : '🚢'; el.classList.remove('cell-hidden'); } grid[coord.r][coord.c].revealed = true; });
             ship.coords.forEach(coord => { for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = coord.r + dr, nc = coord.c + dc; if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) if (!grid[nr][nc].isShip) revealCell(nr, nc, true); } });
@@ -806,7 +749,7 @@
                 if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
                     const el = document.getElementById(`cell-${nr}-${nc}`), d = grid[nr][nc]; if(el) el.classList.add('cell-sonar');
                     if (playerUpgrades.includes('drone_2') && d.isShip && !d.revealed) { if (shipData[d.shipId].isAlien) Sound.hitAlien(); else Sound.hit(); revealCell(nr, nc, true); }
-                    setTimeout(() => { if(el) { el.classList.remove('cell-sonar'); if (d.isShip && (!playerUpgrades.includes('drone_2') || !d.revealed)) el.innerHTML = '<span class="text-sm scale-110" style="color: #fbbf24;">🚢</span>'; else if (!d.revealed) el.innerHTML = '<span class="text-[10px] opacity-20">🌊</span>'; } }, 1200);
+                    setTimeout(() => { if(el) { el.classList.remove('cell-sonar'); if (d.isShip && (!playerUpgrades.includes('drone_2') || !d.revealed)) el.innerHTML = '<span class="text-sm" style="color: #fbbf24;">🚢</span>'; else if (!d.revealed) el.innerHTML = '<span class="text-[10px] opacity-20">🌊</span>'; } }, 1200);
                 }
             }
             advanceTurn();
@@ -824,25 +767,25 @@
         }
 
         function placeShips() {
-            const dist = currentMissionPos ? (currentMissionPos.r + currentMissionPos.c) : 0;
+            const totalDist = currentMissionPos ? (currentMissionPos.r + currentMissionPos.c) : 0;
             shipData.forEach((ship, idx) => {
                 let placed = false, attempts = 0;
                 while (!placed && attempts < 1500) {
                     const r = Math.floor(Math.random() * GRID_SIZE), c = Math.floor(Math.random() * GRID_SIZE);
                     let shape = [];
+                    // Alien ships (non-linear) only start at distance 3. First fights are normal.
                     if (isBoss && idx === 0) shape = BOSS_CORE_SHAPE;
-                    else if (isBoss || (dist >= 4) || (dist === 3 && Math.random() < 0.5)) {
+                    else if (isBoss || (totalDist >= 3 && Math.random() < (totalDist / 10))) {
                         const v = ALIEN_SHAPES[ship.size] || ALIEN_SHAPES[2]; shape = v[Math.floor(Math.random() * v.length)];
                     } else { const h = Math.random() < 0.5; shape = Array.from({length: ship.size}, (_, i) => h ? [0, i] : [i, 0]); }
+                    
                     if (canPlaceShape(r, c, shape)) {
                         const actualCoords = [];
                         shape.forEach(offset => { 
                             const nr = r + offset[0], nc = c + offset[1]; 
                             if (grid[nr] && grid[nr][nc]) {
-                                grid[nr][nc].isShip = true; 
-                                grid[nr][nc].shipId = ship.id; 
-                                ship.coords.push({r: nr, c: nc}); 
-                                actualCoords.push({r: nr, c: nc}); 
+                                grid[nr][nc].isShip = true; grid[nr][nc].shipId = ship.id; 
+                                ship.coords.push({r: nr, c: nc}); actualCoords.push({r: nr, c: nc}); 
                             }
                         });
                         ship.isAlien = !isLinear(actualCoords); placed = true;
@@ -876,15 +819,13 @@
         }
 
         function updateUI() { const se = document.getElementById('shots-count'); se.innerText = shots; document.getElementById('sonar-count').innerText = sonarCharges; document.getElementById('torpedo-count').innerText = torpedoCharges; document.getElementById('buster-count').innerText = busterCharges; document.getElementById('weather-text').innerHTML = `<span class="keyword">${currentWeather}</span>`; document.getElementById('next-weather').innerText = isBoss ? 'UNSTABLE PHASING' : `Forecast: ${nextWeather} in ${weatherCounter}`; document.getElementById('sonar-btn').disabled = (currentWeather === 'Electrical Storm' && selectedSub !== 'Ghost-6') || sonarCharges <= 0; document.getElementById('buster-btn').disabled = busterCharges <= 0; document.getElementById('fleet-count').innerText = `${hits}/${totalShipSegments}`; const dash = document.getElementById('fleet-dashboard'); dash.innerHTML = ''; shipData.forEach(ship => { const cont = document.createElement('div'); cont.className = `ship-indicator ${ship.isSunk ? 'ship-sunk' : ''}`; if (ship.size === 5) cont.style.borderColor = '#ef444455'; for (let i = 0; i < ship.size; i++) { const seg = document.createElement('div'); seg.className = 'ship-segment'; if (!ship.isSunk && i < (ship.size - ship.health)) seg.style.background = '#94a3b8'; cont.appendChild(seg); } dash.appendChild(cont); }); if (shots <= 5) { se.parentElement.classList.add('text-red-600', 'animate-pulse'); } else { se.parentElement.classList.remove('text-red-600', 'animate-pulse'); } }
-
         function moveMerchant() { if (!isEscort || !gameActive) return; const idx = merchantPath.findIndex(p => p.r === merchantPos.r && p.c === merchantPos.c); if (idx < merchantPath.length - 1) { merchantPos = merchantPath[idx + 1]; renderMerchant(); checkEngagements(); } }
-        function checkEngagements() { for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = merchantPos.r + dr, nc = merchantPos.c + dc; if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) { const cellData = grid[nr][nc]; if (cellData.isShip && !shipData[cellData.shipId].isSunk) { merchantHealth--; Sound.alert(); logEvent(`WARNING: Merchant damaged at [${nr+1}, ${nc+1}]!`, 'warning'); break; } } } updateMerchantUI(); if (merchantHealth <= 0) endGame(false); else if (merchantPos.r === 0 && merchantPos.c === 0) endGame(true); }
+        function checkEngagements() { for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = merchantPos.r + dr, nc = merchantPos.c + dc; if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) { const data = grid[nr][nc]; if (data.isShip && !shipData[data.shipId].isSunk) { merchantHealth--; Sound.alert(); logEvent(`WARNING: Transport vessel damaged by signature at [${nr+1}, ${nc+1}]!`, 'warning'); break; } } } updateMerchantUI(); if (merchantHealth <= 0) endGame(false); else if (merchantPos.r === 0 && merchantPos.c === 0) endGame(true); }
         function renderMerchant() { const old = document.querySelector('.cell-merchant'); if (old) { old.classList.remove('cell-merchant'); const parts = old.id.split('-'), pr = parseInt(parts[1]), pc = parseInt(parts[2]); old.innerHTML = grid[pr][pc].revealed ? (grid[pr][pc].isShip ? '💥' : grid[pr][pc].neighborShips || '') : ''; } const cell = document.getElementById(`cell-${merchantPos.r}-${merchantPos.c}`); if (cell) { cell.classList.add('cell-merchant'); cell.innerHTML = '<span class="text-xl">🚢</span>'; } }
         function updateMerchantUI() { const bar = document.getElementById('merchant-health-bar'), txt = document.getElementById('merchant-health-text'), pct = (merchantHealth / merchantMaxHealth) * 100; bar.style.width = `${pct}%`; bar.style.backgroundColor = pct < 30 ? '#ef4444' : (pct < 60 ? '#f59e0b' : '#10b981'); txt.innerText = `${merchantHealth}/${merchantMaxHealth}`; }
         function generateMerchantPath() { merchantPath = []; let r = 14, c = 14; merchantPath.push({r, c}); while (r > 0 || c > 0) { if (r > 0 && c > 0) { if (Math.random() < 0.5) r--; else c--; } else if (r > 0) r--; else c--; merchantPath.push({r, c}); } }
 
         function checkGameOver() { if (isBoss && shipData[0].isSunk) endGame(true); else if (hits >= totalShipSegments) endGame(true); else if (shots <= 0 && gameActive) endGame(false); else if (isEscort && (merchantHealth <= 0 || (merchantPos.r === 0 && merchantPos.c === 0))) { if(merchantHealth <= 0) endGame(false); else endGame(true); } }
-        
         function endGame(win) {
             gameActive = false; win ? Sound.victory() : Sound.defeat();
             for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) { const el = document.getElementById(`cell-${r}-${c}`), d = grid[r][c]; if (el && !d.revealed && d.isShip) { el.classList.remove('cell-hidden'); el.classList.add('bg-slate-700/50'); el.innerHTML = shipData[d.shipId].isAlien ? '🐙' : '🚢'; } }
@@ -892,23 +833,18 @@
                 const overlay = document.getElementById('overlay'), title = document.getElementById('overlay-title'), msg = document.getElementById('overlay-msg'), b1 = document.getElementById('end-action-btn'), b2 = document.getElementById('secondary-action-btn');
                 overlay.classList.remove('hidden'); b2.classList.add('hidden');
                 if (win) {
-                    title.innerText = isBoss ? "ANOMALY SEALED" : "VICTORY"; title.className = "text-6xl font-black mb-4 text-emerald-500 tracking-tighter uppercase italic font-mono";
-                    if (isBoss) { msg.innerText = "The Abyssal Rift is closed. Expedition successful."; b1.innerText = "Main Menu"; b1.onclick = mainMenu; }
-                    else if (gameMode === 'campaign') { msg.innerText = `Sector secured. ${shots} ammo salvaged. Arcane echo recovered.`; b1.innerText = "Claim Rewards"; b1.onclick = () => { salvagedAmmo += shots; mapData[currentMissionPos.r][currentMissionPos.c].hint = generateRiftHint(); showScreen('reward'); overlay.classList.add('hidden'); }; }
-                    else { msg.innerText = `Sector clear. Assignment ended.`; b1.innerText = "Main Menu"; b1.onclick = mainMenu; }
+                    title.innerText = isBoss ? "SOURCE NEUTRALIZED" : "OPERATION SUCCESS"; title.className = "text-6xl font-black mb-4 text-emerald-500 tracking-tighter uppercase italic font-mono";
+                    if (isBoss) { msg.innerText = "The signal origin is silenced. Operation Redline complete."; b1.innerText = "Main Menu"; b1.onclick = mainMenu; }
+                    else if (gameMode === 'campaign') { msg.innerText = `Sector cleared. ${shots} scrap salvaged. Signal trace interpreted.`; b1.innerText = "Claim Salvage"; b1.onclick = () => { salvagedAmmo += shots; mapData[currentMissionPos.r][currentMissionPos.c].hint = generateRiftHint(); showScreen('reward'); overlay.classList.add('hidden'); }; }
+                    else { msg.innerText = `Deployment concluded. Signals interpreted.`; b1.innerText = "Main Menu"; b1.onclick = mainMenu; }
                 } else {
-                    title.innerText = "DEFEAT"; title.className = "text-6xl font-black mb-4 text-red-600 tracking-tighter uppercase italic font-mono";
+                    title.innerText = "FAILED"; title.className = "text-6xl font-black mb-4 text-red-600 tracking-tighter uppercase italic font-mono";
                     if (gameMode === 'campaign') {
-                        msg.innerText = isEscort && merchantHealth <= 0 ? "Vessel lost. search area compromised." : "Ordinance failure. Hostiles escaped.";
-                        b1.innerText = "Retry Sector";
-                        b1.onclick = () => { overlay.classList.add('hidden'); startMission(); };
-                        b2.classList.remove('hidden');
-                        b2.innerText = "Abandon Campaign";
-                        b2.onclick = mainMenu;
+                        msg.innerText = isEscort && merchantHealth <= 0 ? "Vessel lost. search area compromised." : "Simulation ended. Signal source lost.";
+                        b1.innerText = "Retry Sector"; b1.onclick = () => { overlay.classList.add('hidden'); startMission(); };
+                        b2.classList.remove('hidden'); b2.innerText = "Abandon Operation"; b2.onclick = mainMenu;
                     } else {
-                        msg.innerText = "Simulation ended.";
-                        b1.innerText = "Main Menu";
-                        b1.onclick = mainMenu;
+                        msg.innerText = "Tactical simulation failed."; b1.innerText = "Main Menu"; b1.onclick = mainMenu;
                     }
                 }
             }, 1500);
@@ -916,11 +852,11 @@
 
         function handleCellHover(r, c, enter) { if (currentMode !== 'sonar' || !gameActive) return; const rm = -1, rM = playerUpgrades.includes('drone_1') ? 2 : 1; for (let dr = rm; dr <= rM; dr++) for (let dc = rm; dc <= rM; dc++) { const nr = r + dr, nc = c + dc; if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) { const el = document.getElementById(`cell-${nr}-${nc}`); if (el) enter ? el.classList.add('cell-sonar-preview') : el.classList.remove('cell-sonar-preview'); } } }
         function applyUpgrade(id) { playerUpgrades.push(id); mapData[currentMissionPos.r][currentMissionPos.c].status = 'visited'; for(let r=0; r<5; r++) for(let c=0; c<5; c++) if(mapData[r][c].status === 'current') mapData[r][c].status = 'visited'; playerPos = {r: currentMissionPos.r, c: currentMissionPos.c}; mapData[playerPos.r][playerPos.c].status = 'current'; showScreen('overworld'); }
-        function cancelWeapon() { currentMode = 'shoot'; ['sonar-btn', 'torpedo-btn', 'buster-btn'].forEach(id => document.getElementById(id).classList.remove('weapon-active')); document.getElementById('dir-selector').classList.add('hidden'); document.getElementById('status-text').innerText = "READY"; updateUI(); }
+        function cancelWeapon() { currentMode = 'shoot'; ['sonar-btn', 'torpedo-btn', 'buster-btn'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('weapon-active'); }); document.getElementById('status-text').innerText = "READY"; document.getElementById('dir-selector').classList.add('hidden'); updateUI(); }
         function rerollRewards() { if (salvagedAmmo >= rerollCost) { Sound.init(); salvagedAmmo -= rerollCost; rerollCost *= 2; Sound.ui(); document.getElementById('salvaged-ammo-display').innerText = salvagedAmmo; document.getElementById('reroll-cost').innerText = rerollCost; refreshRewardDisplay(); } }
         function generateRewards() { rerollCost = 1; document.getElementById('reroll-cost').innerText = rerollCost; refreshRewardDisplay(); }
-        function refreshRewardDisplay() { const container = document.getElementById('reward-options-container'); container.innerHTML = ''; const available = UPGRADES.filter(u => !playerUpgrades.includes(u.id) && (!u.req || playerUpgrades.includes(u.req))); const options = [...available].sort(() => 0.5 - Math.random()).slice(0, 3); options.forEach(opt => { const card = document.createElement('div'); card.onclick = () => { Sound.ui(); applyUpgrade(opt.id); }; card.className = `reward-card bg-slate-900 p-6 rounded-xl text-center border-2 border-slate-700 font-mono`; card.innerHTML = `<h3 class="text-amber-400 font-bold uppercase text-sm mb-2">${opt.name}</h3><p class="text-xs text-slate-400 leading-tight">${opt.desc}</p><div class="mt-4 text-[10px] text-emerald-500 font-bold uppercase tracking-widest">Claim</div>`; container.appendChild(card); }); document.getElementById('reroll-btn').disabled = salvagedAmmo < rerollCost; }
-        function abortMatch() { Sound.init(); if (gameMode === 'arcade') mainMenu(); else showScreen('overworld'); }
+        function refreshRewardDisplay() { const container = document.getElementById('reward-options-container'); container.innerHTML = ''; const available = UPGRADES.filter(u => !playerUpgrades.includes(u.id) && (!u.req || playerUpgrades.includes(u.req))); const options = [...available].sort(() => 0.5 - Math.random()).slice(0, 3); options.forEach(opt => { const card = document.createElement('div'); card.onclick = () => { Sound.ui(); applyUpgrade(opt.id); }; card.className = `reward-card bg-slate-900 p-6 rounded-xl text-center border-2 border-slate-700 font-mono`; card.innerHTML = `<h3 class="text-amber-400 font-bold uppercase text-sm mb-2">${opt.name}</h3><p class="text-xs text-slate-400 leading-tight">${opt.desc}</p><div class="mt-4 text-[10px] text-emerald-500 font-bold uppercase tracking-widest">Install</div>`; container.appendChild(card); }); document.getElementById('reroll-btn').disabled = salvagedAmmo < rerollCost; }
+        function abortMatch() { if (gameMode === 'arcade') mainMenu(); else showScreen('overworld'); }
         function revealRandomWater(count) { let revealed = 0, attempts = 0; while (revealed < count && attempts < 100) { const r = Math.floor(Math.random() * GRID_SIZE), c = Math.floor(Math.random() * GRID_SIZE); if (!grid[r][c].isShip && !grid[r][c].revealed) { revealCell(r, c, true); revealed++; } attempts++; } }
 
         // --- TOGGLES ---
@@ -928,12 +864,9 @@
         function activateTorpedo() { Sound.init(); if (currentMode === 'torpedo') cancelWeapon(); else if (torpedoCharges > 0) { cancelWeapon(); currentMode = 'torpedo'; document.getElementById('torpedo-btn').classList.add('weapon-active'); document.getElementById('status-text').innerText = "TORPEDO ACTIVE"; } }
         function activateBuster() { Sound.init(); if (currentMode === 'buster') cancelWeapon(); else if (busterCharges > 0) { cancelWeapon(); currentMode = 'buster'; document.getElementById('buster-btn').classList.add('weapon-active'); document.getElementById('status-text').innerText = "BUSTER READY"; } }
 
-        // --- LISTENERS ---
-        window.onload = function() { initTooltips(); showScreen('title'); 
-            document.getElementById('btn-up').onclick = () => fireTorpedoActual('up');
-            document.getElementById('btn-down').onclick = () => fireTorpedoActual('down');
-            document.getElementById('btn-left').onclick = () => fireTorpedoActual('left');
-            document.getElementById('btn-right').onclick = () => fireTorpedoActual('right');
+        window.onload = function() { 
+            initTooltips(); 
+            showScreen('title'); 
         };
     </script>
 </body>
